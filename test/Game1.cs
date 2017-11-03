@@ -16,6 +16,8 @@ namespace test
         Planetoids planets_1;
         Planetoids planets_2;
         Planetoids planets_3;
+        Planetoids planets_4;
+        PlayerControls pc;
 
         public Game1()
         {
@@ -34,12 +36,17 @@ namespace test
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
-            // TODO: Add your initialization logic here
+            // Init sprites
             character = new PlayerCharacter(this.GraphicsDevice);
             planets_0 = new Planetoids(this.GraphicsDevice,0);
             planets_1 = new Planetoids(this.GraphicsDevice, 1);
             planets_2 = new Planetoids(this.GraphicsDevice, 2);
             planets_3 = new Planetoids(this.GraphicsDevice, 3);
+            planets_4 = new Planetoids(this.GraphicsDevice, 4);
+
+            // Init controls
+
+            pc = new PlayerControls(character);
 
 
             base.Initialize();
@@ -74,6 +81,8 @@ namespace test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            KeyboardState state = Keyboard.GetState();
+            pc.checkControls(state);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -82,6 +91,8 @@ namespace test
             planets_1.Update(gameTime);
             planets_2.Update(gameTime);
             planets_3.Update(gameTime);
+            planets_4.Update(gameTime);
+            
             base.Update(gameTime);
         }
 
@@ -101,6 +112,8 @@ namespace test
             planets_1.Draw(spriteBatch);
             planets_2.Draw(spriteBatch);
             planets_3.Draw(spriteBatch);
+            planets_4.Draw(spriteBatch);
+
             spriteBatch.End();
 
             // TODO: Add your drawing code here

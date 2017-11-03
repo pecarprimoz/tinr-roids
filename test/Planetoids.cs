@@ -41,6 +41,10 @@ namespace test
                     X = 0;
                     Y = 390;
                     break;
+                case 4:
+                    X = 360;
+                    Y = 0;
+                    break;
                 default:
                     X = 0;
                     Y = 0;
@@ -60,7 +64,7 @@ namespace test
             spin = new Animation();
             for(int i=0; i<12; i++)
             {
-                spin.AddFrame(new Rectangle((i*(int)planetWidth), (int)Y, (int)planetWidth, (int)planetHeight), TimeSpan.FromSeconds(.2));
+                spin.AddFrame(new Rectangle((i*(int)planetWidth), (int)Y, (int)planetWidth, (int)planetHeight), TimeSpan.FromSeconds(.15));
             }
         }
         public void Draw(SpriteBatch spriteBatch)
