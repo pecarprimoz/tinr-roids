@@ -6,52 +6,41 @@ namespace test
     class Planetoids
     {
         //Atlas vseh ladji
-        static Texture2D planetoidsSheet;
+        CollsionDetection _collision;
+        Texture2D planetoidsSheet;
         Animation spin;
         Animation currentAnimation;
         float planetWidth;
         float planetHeight;
-        public float X
+        //Vector2 _position;
+        Vector2 _actualPos;
+        //Vector2 _direction;
+        int size_reduction;
+        float _angle;
+        public CollsionDetection getCollision()
         {
-            get;
-            set;
+            return _collision;
         }
-        public float Y
+        Random r = new Random(DateTime.Now.Millisecond);
+        public Planetoids(GraphicsDevice graphicsDevice)
         {
-            get;
-            set;
-        }
-        public Planetoids(GraphicsDevice graphicsDevice, int row)
-        {
-            switch (row)
-            {
-                case 0:
-                    X = 0;
-                    Y = 0;
-                    break;
-                case 1:
-                    X = 0;
-                    Y = 130;
-                    break;
-                case 2:
-                    X = 0;
-                    Y = 260;
-                    break;
-                case 3:
-                    X = 0;
-                    Y = 390;
-                    break;
-                case 4:
-                    X = 360;
-                    Y = 0;
-                    break;
-                default:
-                    X = 0;
-                    Y = 0;
-                    break;
-            }
-            planetWidth = 130;
+            
+            int _startPosX;
+            int _startPosY;
+
+            _startPosX = r.Next(0, (int)graphicsDevice.Viewport.Width);
+            _startPosY = r.Next(0, (int)graphicsDevice.Viewport.Height);
+            //_position.Y = 0;_position.Y = 130;_position.Y = 260;_position.Y = 390;
+            
+            _actualPos.X = _startPosX;
+            _actualPos.Y = _startPosY;
+            size_reduction = 2;
             planetHeight = 130;
+            planetWidth = 130;
+            _angle = 0f;
+            _actualPos.X = _startPosX;
+            _actualPos.Y = _startPosY;
+            Console.WriteLine(_actualPos);
             if (planetoidsSheet == null)
             {
                 //Poglej tukaj ce je path pravilen, ce ne se atlas ne bo izriseval pravilno. 
@@ -61,21 +50,25 @@ namespace test
                     planetoidsSheet = Texture2D.FromStream(graphicsDevice, stream);
                 }
             }
+            _collision = new CollsionDetection(_actualPos, graphicsDevice, planetWidth/size_reduction, planetHeight/size_reduction, _angle,2);
             spin = new Animation();
+            Random pick_a_rock = new Random(DateTime.Now.Millisecond);
+            int nice_rock = pick_a_rock.Next(0, 4);
             for(int i=0; i<12; i++)
             {
-                spin.AddFrame(new Rectangle((i*(int)planetWidth), (int)Y, (int)planetWidth, (int)planetHeight), TimeSpan.FromSeconds(.15));
+                spin.AddFrame(new Rectangle((i*(int)planetWidth), (int)nice_rock*130, (int)planetWidth, (int)planetHeight), TimeSpan.FromSeconds(.15));
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 topLeftPos = new Vector2(this.X, this.Y);
-            Color tintColor = Color.White;
             var sourceRectangle = currentAnimation.CurrentRectangle;
-            
-            spriteBatch.Draw(planetoidsSheet, topLeftPos, sourceRectangle,Color.White);
+            //            spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
+            spriteBatch.Draw(planetoidsSheet, new Rectangle((int)_actualPos.X, (int)_actualPos.Y,(int)planetWidth/size_reduction,(int)planetHeight/size_reduction),sourceRectangle,Color.White,_angle, new Vector2(planetWidth / 2, planetHeight / 2),SpriteEffects.None,0f);
+            _collision.setPosition(_actualPos);
+            _collision.setAngle(_angle);
+            _collision.drawCollisionBox(spriteBatch);
         }
-       
+
         public void Update(GameTime gameTime)
         {
             currentAnimation = spin;

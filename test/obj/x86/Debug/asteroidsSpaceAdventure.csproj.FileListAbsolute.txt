@@ -25,3 +25,14 @@ C:\Users\primoz-pc\source\repos\test\test\obj\x86\Debug\asteroidsSpaceAdventure.
 C:\Users\primoz-pc\source\repos\test\test\obj\x86\Debug\test.exe
 C:\Users\primoz-pc\source\repos\test\test\obj\x86\Debug\test.pdb
 C:\Users\primoz-pc\source\repos\test\test\obj\x86\Debug\asteroidsSpaceAdventure.csprojResolveAssemblyReference.cache
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_0.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_1.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_2.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_3.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_4.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_5.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_6.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Background\bkgd_7.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Ships\main-ship-v1.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Projectiles\shotoval.xnb
+C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content\Projectiles\shotsmall.xnb

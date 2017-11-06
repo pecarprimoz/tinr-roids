@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System;
+using System.Collections.Generic;
 namespace test
 {
     /// <summary>
@@ -16,8 +17,8 @@ namespace test
         Planetoids planets_1;
         Planetoids planets_2;
         Planetoids planets_3;
-        Planetoids planets_4;
-        PlayerControls pc;
+        int numberOfRocks;
+        List<Planetoids> my_rocks;
 
         public Game1()
         {
@@ -36,17 +37,18 @@ namespace test
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
+            numberOfRocks = 1;
             // Init sprites
             character = new PlayerCharacter(this.GraphicsDevice);
-            planets_0 = new Planetoids(this.GraphicsDevice,0);
-            planets_1 = new Planetoids(this.GraphicsDevice, 1);
-            planets_2 = new Planetoids(this.GraphicsDevice, 2);
-            planets_3 = new Planetoids(this.GraphicsDevice, 3);
-            planets_4 = new Planetoids(this.GraphicsDevice, 4);
+            my_rocks = new List<Planetoids>();
+            for(int i=0; i<numberOfRocks; i++)
+            {
+                my_rocks.Add(new Planetoids(this.GraphicsDevice));
+            }
+            //planets_3 = new Planetoids(this.GraphicsDevice, 3);
 
             // Init controls
 
-            pc = new PlayerControls(character);
 
 
             base.Initialize();
@@ -81,17 +83,23 @@ namespace test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
-            pc.checkControls(state);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            KeyboardState state = Keyboard.GetState();
             // TODO: Add your update logic here
-            planets_0.Update(gameTime);
-            planets_1.Update(gameTime);
-            planets_2.Update(gameTime);
-            planets_3.Update(gameTime);
-            planets_4.Update(gameTime);
+            for (int i = 0; i < numberOfRocks; i++)
+            {
+                my_rocks[i].Update(gameTime);
+                CollsionDetection _charCollision = character.getCollision();
+                CollsionDetection _rockCollision = my_rocks[i].getCollision();
+                if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision))
+                {
+                    Console.WriteLine("Hit");
+                }
+
+            }
+            //planets_3.Update(gameTime);
+            character.checkControls(state);
             
             base.Update(gameTime);
         }
@@ -104,15 +112,14 @@ namespace test
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-
+            
             //Izris karakterja
             character.Draw(spriteBatch);
             //Izris planetov
-            planets_0.Draw(spriteBatch);
-            planets_1.Draw(spriteBatch);
-            planets_2.Draw(spriteBatch);
-            planets_3.Draw(spriteBatch);
-            planets_4.Draw(spriteBatch);
+            for (int i = 0; i < numberOfRocks; i++)
+            {
+                my_rocks[i].Draw(spriteBatch);
+            }
 
             spriteBatch.End();
 

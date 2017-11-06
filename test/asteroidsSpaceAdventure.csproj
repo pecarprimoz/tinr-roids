@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationFrame.cs" />
-    <Compile Include="PlayerControls.cs" />
+    <Compile Include="CollsionDetection.cs" />
     <Compile Include="Planetoids.cs" />
     <Compile Include="PlayerCharacter.cs" />
     <Compile Include="Game1.cs" />
