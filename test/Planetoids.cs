@@ -32,8 +32,6 @@ namespace test
             _startPosY = r.Next(0, (int)graphicsDevice.Viewport.Height);
             //_position.Y = 0;_position.Y = 130;_position.Y = 260;_position.Y = 390;
             
-            _actualPos.X = _startPosX;
-            _actualPos.Y = _startPosY;
             size_reduction = 2;
             planetHeight = 130;
             planetWidth = 130;
@@ -59,10 +57,11 @@ namespace test
                 spin.AddFrame(new Rectangle((i*(int)planetWidth), (int)nice_rock*130, (int)planetWidth, (int)planetHeight), TimeSpan.FromSeconds(.15));
             }
         }
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             var sourceRectangle = currentAnimation.CurrentRectangle;
-            //            spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
+            //spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
             spriteBatch.Draw(planetoidsSheet, new Rectangle((int)_actualPos.X, (int)_actualPos.Y,(int)planetWidth/size_reduction,(int)planetHeight/size_reduction),sourceRectangle,Color.White,_angle, new Vector2(planetWidth / 2, planetHeight / 2),SpriteEffects.None,0f);
             _collision.setPosition(_actualPos);
             _collision.setAngle(_angle);

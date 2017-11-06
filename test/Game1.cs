@@ -13,11 +13,12 @@ namespace test
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerCharacter character;
-        Planetoids planets_0;
-        Planetoids planets_1;
-        Planetoids planets_2;
-        Planetoids planets_3;
+        int screenWidth = 800;
+        int screenHeight = 600;
         int numberOfRocks;
+        int numberOfBullets;
+        float timeSinceShot;
+        List<Projectile> my_bullets;
         List<Planetoids> my_rocks;
 
         public Game1()
@@ -34,18 +35,25 @@ namespace test
         /// </summary>
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = screenHeight;
+            timeSinceShot = 0;
             graphics.ApplyChanges();
-            numberOfRocks = 1;
+            numberOfRocks = 5;
+            numberOfBullets = 10000;
+            
             // Init sprites
             character = new PlayerCharacter(this.GraphicsDevice);
+            my_bullets = new List<Projectile>();
             my_rocks = new List<Planetoids>();
             for(int i=0; i<numberOfRocks; i++)
             {
                 my_rocks.Add(new Planetoids(this.GraphicsDevice));
             }
-            //planets_3 = new Planetoids(this.GraphicsDevice, 3);
+            for(int j=0; j<numberOfBullets; j++)
+            {
+                my_bullets.Add(new Projectile(this.GraphicsDevice));
+            }
 
             // Init controls
 
@@ -83,10 +91,26 @@ namespace test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            timeSinceShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState state = Keyboard.GetState();
             // TODO: Add your update logic here
+            character.checkControls(state);
+            for(int j=0; j < numberOfBullets; j++)
+            {
+                my_bullets[j].UpdateWithShip(character, screenWidth, screenHeight);
+
+                if (!my_bullets[j].getisFlying()) { 
+                    if (timeSinceShot > 0.05) {
+                        Console.WriteLine(j);
+                        my_bullets[j].checkControls(state);
+                        timeSinceShot = 0;
+
+                    }
+                }
+
+            }
             for (int i = 0; i < numberOfRocks; i++)
             {
                 my_rocks[i].Update(gameTime);
@@ -94,12 +118,13 @@ namespace test
                 CollsionDetection _rockCollision = my_rocks[i].getCollision();
                 if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision))
                 {
-                    Console.WriteLine("Hit");
+                    //my_rocks[i]
                 }
+
 
             }
             //planets_3.Update(gameTime);
-            character.checkControls(state);
+            
             
             base.Update(gameTime);
         }
@@ -112,7 +137,11 @@ namespace test
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            
+            for (int j = 0; j < numberOfBullets; j++)
+            {
+                if(my_bullets[j].getisFlying())
+                my_bullets[j].Draw(spriteBatch);
+            }
             //Izris karakterja
             character.Draw(spriteBatch);
             //Izris planetov

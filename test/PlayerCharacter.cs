@@ -23,10 +23,29 @@ namespace test
         {
             return _collision;
         }
+        public Vector2 getPosition()
+        {
+            return _position;
+        }
+        public Vector2 getDirection()
+        {
+            return _direction;
+        }
+
+        public float getAngle()
+        {
+            return _angle;
+        }
+        public void setIsAlive(bool b)
+        {
+            _isAlive = b;
+        }
+        
+
         public PlayerCharacter(GraphicsDevice graphicsDevice)
         {
             _isAlive = true;
-            
+
             if (spaceShipsSheet == null)
             {
                 //Poglej tukaj ce je path pravilen, ce ne se atlas ne bo izriseval pravilno. 
@@ -39,11 +58,11 @@ namespace test
                 }
             }
             //Init collision detection
-            _collision = new CollsionDetection(_position, graphicsDevice, _width, _height,_angle,1);
+            _collision = new CollsionDetection(_position, graphicsDevice, _width, _height, _angle, 1);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+
 
             //Draw the player, /2 mas tm za rotacijsko tocko, k je nasred sprite-a
             spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
@@ -53,9 +72,9 @@ namespace test
             _collision.drawCollisionBox(spriteBatch);
         }
         
-
         public void checkControls(KeyboardState state)
         {
+
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 _angle -= 0.1f;
