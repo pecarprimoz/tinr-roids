@@ -45,6 +45,9 @@ namespace test
         public PlayerCharacter(GraphicsDevice graphicsDevice)
         {
             _isAlive = true;
+            //Temporary spawn
+            _position.X = 400;
+            _position.Y = 300;
 
             if (spaceShipsSheet == null)
             {
@@ -62,14 +65,16 @@ namespace test
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            
 
-
-            //Draw the player, /2 mas tm za rotacijsko tocko, k je nasred sprite-a
-            spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
-            //Draw the box for collsion detection
-            _collision.setPosition(_position);
-            _collision.setAngle(_angle);
-            _collision.drawCollisionBox(spriteBatch);
+            if (_isAlive) { 
+                //Draw the player, /2 mas tm za rotacijsko tocko, k je nasred sprite-a
+                spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
+                //Draw the box for collsion detection
+                _collision.setPosition(_position);
+                _collision.setAngle(_angle);
+                _collision.drawCollisionBox(spriteBatch);
+            }
         }
         
         public void checkControls(KeyboardState state)

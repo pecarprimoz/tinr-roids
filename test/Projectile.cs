@@ -21,6 +21,10 @@ namespace test
         {
             return projectileSheet;
         }
+        public CollsionDetection getCollision()
+        {
+            return _collision;
+        }
         public Boolean getisFlying()
         {
             return isFlying;
@@ -52,12 +56,11 @@ namespace test
         {
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                Console.WriteLine("pew");
+                //Console.WriteLine("pew");
                 canShoot = false;
                 isFlying = true;
                 _direction = new Vector2((float)Math.Sin(_angle), -(float)Math.Cos(_angle));
             }
-            
         }
 
         public void UpdateWithShip(PlayerCharacter pc, int gdWidth, int gdHeight)

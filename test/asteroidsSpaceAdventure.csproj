@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationFrame.cs" />
+    <Compile Include="Background.cs" />
+    <Compile Include="BackgroundLoader.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="CollsionDetection.cs" />
     <Compile Include="Planetoids.cs" />

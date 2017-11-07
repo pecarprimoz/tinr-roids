@@ -20,6 +20,7 @@ namespace test
         float timeSinceShot;
         List<Projectile> my_bullets;
         List<Planetoids> my_rocks;
+        BackgroundLoader my_backs;
 
         public Game1()
         {
@@ -41,11 +42,11 @@ namespace test
             graphics.ApplyChanges();
             numberOfRocks = 5;
             numberOfBullets = 10000;
-            
             // Init sprites
             character = new PlayerCharacter(this.GraphicsDevice);
             my_bullets = new List<Projectile>();
             my_rocks = new List<Planetoids>();
+            my_backs = new BackgroundLoader(this.GraphicsDevice);
             for(int i=0; i<numberOfRocks; i++)
             {
                 my_rocks.Add(new Planetoids(this.GraphicsDevice));
@@ -54,10 +55,6 @@ namespace test
             {
                 my_bullets.Add(new Projectile(this.GraphicsDevice));
             }
-
-            // Init controls
-
-
 
             base.Initialize();
         }
@@ -95,37 +92,58 @@ namespace test
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState state = Keyboard.GetState();
+            Vector2 direction = Vector2.Zero;
+            if (state.IsKeyDown(Keys.Up))
+                direction = new Vector2(0, -1);
+            else if (state.IsKeyDown(Keys.Down))
+                direction = new Vector2(0, 1);
+            if (state.IsKeyDown(Keys.Left))
+                direction += new Vector2(-1, 0);
+            else if (state.IsKeyDown(Keys.Right))
+                direction += new Vector2(1, 0);
+            foreach (Background bg in my_backs.getBackgroundList())
+            {
+                bg.Update(gameTime, direction, GraphicsDevice.Viewport);
+            }
             // TODO: Add your update logic here
             character.checkControls(state);
             for(int j=0; j < numberOfBullets; j++)
             {
                 my_bullets[j].UpdateWithShip(character, screenWidth, screenHeight);
-
                 if (!my_bullets[j].getisFlying()) { 
-                    if (timeSinceShot > 0.05) {
-                        Console.WriteLine(j);
+                    if (timeSinceShot > 0.1) {
+                        // Console.WriteLine(j);
                         my_bullets[j].checkControls(state);
                         timeSinceShot = 0;
-
                     }
                 }
-
             }
             for (int i = 0; i < numberOfRocks; i++)
             {
                 my_rocks[i].Update(gameTime);
                 CollsionDetection _charCollision = character.getCollision();
                 CollsionDetection _rockCollision = my_rocks[i].getCollision();
+
                 if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision))
                 {
-                    //my_rocks[i]
+                    character.setIsAlive(false);
                 }
-
-
+                for (int j = 0; j < numberOfBullets; j++)
+                {
+                    if (my_bullets[j].getisFlying())
+                    {
+                        CollsionDetection _bulletCollision = my_bullets[j].getCollision();
+                        if (_bulletCollision.DoRectangleCircleOverlap(_rockCollision, _bulletCollision)){
+                            my_rocks[i].setIsHit(true);
+                            my_rocks.Remove(my_rocks[i]);
+                            numberOfRocks--;
+                        }
+                    }
+                }
             }
-            //planets_3.Update(gameTime);
+
             
-            
+
             base.Update(gameTime);
         }
 
@@ -136,20 +154,27 @@ namespace test
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+            
+            foreach (Background bg in my_backs.getBackgroundList())
+            {
+                
+                bg.Draw(spriteBatch);
+            }
+            character.Draw(spriteBatch);
             for (int j = 0; j < numberOfBullets; j++)
             {
                 if(my_bullets[j].getisFlying())
                 my_bullets[j].Draw(spriteBatch);
             }
             //Izris karakterja
-            character.Draw(spriteBatch);
+            
             //Izris planetov
             for (int i = 0; i < numberOfRocks; i++)
             {
                 my_rocks[i].Draw(spriteBatch);
             }
-
+            
             spriteBatch.End();
 
             // TODO: Add your drawing code here
