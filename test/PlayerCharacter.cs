@@ -40,7 +40,7 @@ namespace test
         {
             _isAlive = b;
         }
-        
+
 
         public PlayerCharacter(GraphicsDevice graphicsDevice)
         {
@@ -62,6 +62,26 @@ namespace test
             }
             //Init collision detection
             _collision = new CollsionDetection(_position, graphicsDevice, _width, _height, _angle, 1);
+        }
+        public void checkIfGoingTroughScreenEdges(int screenWidth, int screenHeight)
+        {
+            //change hardcoded values
+            if (_position.X > screenWidth)
+            {
+                _position.X = 0;
+            }
+            if (_position.X < 0)
+            {
+                _position.X = screenWidth;
+            }
+            if (_position.Y > screenHeight)
+            {
+                _position.Y = 0;
+            }
+            if (_position.Y < 0)
+            {
+                _position.Y = screenHeight;
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -93,16 +93,23 @@ namespace test
                 Exit();
             KeyboardState state = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
-            if (state.IsKeyDown(Keys.Up))
-                direction = new Vector2(0, -1);
-            else if (state.IsKeyDown(Keys.Down))
-                direction = new Vector2(0, 1);
-            if (state.IsKeyDown(Keys.Left))
+            Console.WriteLine("X"+character.getDirection().X);
+
+            Console.WriteLine("Y" + character.getDirection().Y);
+            if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0.5 && character.getDirection().X < -0.5 && character.getDirection().Y > 0.5 && character.getDirection().Y < -0.5)
+                direction += new Vector2(0, -1);
+            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X < 0.5 && character.getDirection().X > -0.5 )
+                direction += new Vector2(0, 1);
+            else if (state.IsKeyDown(Keys.Up)  && character.getDirection().X< 0 && character.getDirection().Y > -0.5 && character.getDirection().Y < 0.5)
                 direction += new Vector2(-1, 0);
-            else if (state.IsKeyDown(Keys.Right))
+            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0 && character.getDirection().Y > -0.5 && character.getDirection().Y < 0.5)
                 direction += new Vector2(1, 0);
             foreach (Background bg in my_backs.getBackgroundList())
             {
+                if (bg.autoMove)
+                {
+                    direction += new Vector2(0, 1);
+                }
                 bg.Update(gameTime, direction, GraphicsDevice.Viewport);
             }
             // TODO: Add your update logic here
@@ -141,6 +148,7 @@ namespace test
                     }
                 }
             }
+            character.checkIfGoingTroughScreenEdges(screenWidth,screenHeight);
 
             
 

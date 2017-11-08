@@ -9,7 +9,7 @@ namespace test
         private Vector2 Offset;         //Offset to start drawing our image
         public Vector2 Speed;           //Speed of movement of our parallax effect
         public float Zoom;              //Zoom level of our image
-
+        public bool autoMove;
         private Viewport Viewport;      //Our game viewport
 
         //Calculate Rectangle dimensions, based on offset/viewport/zoom values
@@ -17,17 +17,18 @@ namespace test
         {
             get { return new Rectangle((int)(Offset.X), (int)(Offset.Y), (int)(Viewport.Width / Zoom), (int)(Viewport.Height / Zoom)); }
         }
-
-        public Background(Texture2D texture, Vector2 speed, float zoom)
+        public Background(Texture2D texture, Vector2 speed, float zoom, bool automove)
         {
             Texture = texture;
             Offset = Vector2.Zero;
             Speed = speed;
             Zoom = zoom;
+            autoMove = automove;
         }
 
         public void Update(GameTime gametime, Vector2 direction, Viewport viewport)
         {
+
             float elapsed = (float)gametime.ElapsedGameTime.TotalSeconds;
 
             //Store the viewport

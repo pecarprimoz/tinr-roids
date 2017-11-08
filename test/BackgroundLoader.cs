@@ -22,15 +22,35 @@ namespace test
             //NOTE TO SELF, MORS PREMAKNT VSE V C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content, KER SE OD TAM ZAGANJA DEBUGGER
             using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_0.png"))
             {
-                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125,125), 0.6f));
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125,125), 0.6f, false));
             }
             using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_1.png"))
             {
-                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.8f));
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.8f, false));
+            }
+            using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_2.png"))
+            {
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 1.1f, false));
+            }
+            using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_3.png"))
+            {
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.6f, false));
+            }
+            using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_4.png"))
+            {
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.6f, false));
             }
             using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_5.png"))
             {
-                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 1.1f));
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.8f, false));
+            }
+            using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_6.png"))
+            {
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.8f,true));
+            }
+            using (var stream = TitleContainer.OpenStream("Content/Background/bkgd_7.png"))
+            {
+                backgrounds.Add(new Background(Texture2D.FromStream(graphicsDevice, stream), new Vector2(125, 125), 0.8f, true));
             }
         }
     }
