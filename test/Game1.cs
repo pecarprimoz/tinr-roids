@@ -40,8 +40,8 @@ namespace test
             graphics.PreferredBackBufferHeight = screenHeight;
             timeSinceShot = 0;
             graphics.ApplyChanges();
-            numberOfRocks = 5;
-            numberOfBullets = 10000;
+            numberOfRocks = 25;
+            numberOfBullets = 100;
             // Init sprites
             character = new PlayerCharacter(this.GraphicsDevice);
             my_bullets = new List<Projectile>();
@@ -93,9 +93,6 @@ namespace test
                 Exit();
             KeyboardState state = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
-            Console.WriteLine("X"+character.getDirection().X);
-
-            Console.WriteLine("Y" + character.getDirection().Y);
             if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0.5 && character.getDirection().X < -0.5 && character.getDirection().Y > 0.5 && character.getDirection().Y < -0.5)
                 direction += new Vector2(0, -1);
             else if (state.IsKeyDown(Keys.Up) && character.getDirection().X < 0.5 && character.getDirection().X > -0.5 )
@@ -127,6 +124,7 @@ namespace test
             }
             for (int i = 0; i < numberOfRocks; i++)
             {
+                my_rocks[i].checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
                 my_rocks[i].Update(gameTime);
                 CollsionDetection _charCollision = character.getCollision();
                 CollsionDetection _rockCollision = my_rocks[i].getCollision();
@@ -149,9 +147,6 @@ namespace test
                 }
             }
             character.checkIfGoingTroughScreenEdges(screenWidth,screenHeight);
-
-            
-
             base.Update(gameTime);
         }
 

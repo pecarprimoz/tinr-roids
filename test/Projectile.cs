@@ -33,7 +33,6 @@ namespace test
         {
             isFlying = isfly;
         }
-
         public Projectile(GraphicsDevice graphicsDevice)
         {
             canShoot = true;
@@ -56,7 +55,6 @@ namespace test
         {
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                //Console.WriteLine("pew");
                 canShoot = false;
                 isFlying = true;
                 _direction = new Vector2((float)Math.Sin(_angle), -(float)Math.Cos(_angle));

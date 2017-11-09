@@ -5,18 +5,17 @@ namespace test
 {
     class Planetoids
     {
-        //Atlas vseh ladji
         CollsionDetection _collision;
         Texture2D planetoidsSheet;
         Animation spin;
         Animation currentAnimation;
         float planetWidth;
         float planetHeight;
-        //Vector2 _position;
         Vector2 _actualPos;
-        //Vector2 _direction;
+        Vector2 _direction;
         int size_reduction;
         float _angle;
+        float _accel;
         bool _isHit;
         public CollsionDetection getCollision()
         {
@@ -26,13 +25,33 @@ namespace test
         {
             _isHit = true;
         }
-        Random r = new Random(DateTime.Now.Millisecond);
+        public Vector2 generateNewDirection()
+        {
+            Random r = new Random(DateTime.Now.Millisecond);
+            int _mode = r.Next(0, 4);
+            switch (_mode)
+            {
+                case (0):
+                    return new Vector2(0, -1);
+                case (1):
+                    return new Vector2(0, 1);
+                case (2):
+                    return new Vector2(1, 0);
+                case (3):
+                    return new Vector2(-1, 0);
+                default: return new Vector2(0, -1);
+            }
+        }
+        
         public Planetoids(GraphicsDevice graphicsDevice)
         {
+            Random r = new Random(DateTime.Now.Millisecond);
             _isHit = false;
+            _accel = 1;
             int _startPosX;
             int _startPosY;
-
+            _direction = generateNewDirection();
+            Console.WriteLine(_direction);
             _startPosX = r.Next(0, (int)graphicsDevice.Viewport.Width);
             _startPosY = r.Next(0, (int)graphicsDevice.Viewport.Height);
             //_position.Y = 0;_position.Y = 130;_position.Y = 260;_position.Y = 390;
@@ -73,12 +92,33 @@ namespace test
                 _collision.drawCollisionBox(spriteBatch);
             }
         }
-
-        public void Update(GameTime gameTime)
+        public void checkIfGoingTroughScreenEdges(int screenWidth, int screenHeight)
         {
-            currentAnimation = spin;
-            currentAnimation.Update(gameTime);
+            //change hardcoded values
+            if (_actualPos.X > screenWidth)
+            {
+                _actualPos.X = 0;
+            }
+            if (_actualPos.X < 0)
+            {
+                _actualPos.X = screenWidth;
+            }
+            if (_actualPos.Y > screenHeight)
+            {
+                _actualPos.Y = 0;
+            }
+            if (_actualPos.Y < 0)
+            {
+                _actualPos.Y = screenHeight;
+            }
         }
-        
+
+        public void Update(GameTime gametime)
+        {
+            _actualPos += (_direction) * _accel;
+            currentAnimation = spin;
+            currentAnimation.Update(gametime);
+
+        }
     }
 }
