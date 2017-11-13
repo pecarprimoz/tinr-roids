@@ -50,15 +50,25 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'android|x86'">
+    <OutputPath>bin\x86\android\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Animation.cs" />
-    <Compile Include="AnimationFrame.cs" />
-    <Compile Include="Background.cs" />
-    <Compile Include="BackgroundLoader.cs" />
-    <Compile Include="Projectile.cs" />
-    <Compile Include="CollsionDetection.cs" />
-    <Compile Include="Planetoids.cs" />
-    <Compile Include="PlayerCharacter.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationFrame.cs" />
+    <Compile Include="Background\Background.cs" />
+    <Compile Include="Background\BackgroundLoader.cs" />
+    <Compile Include="Projectile\Projectile.cs" />
+    <Compile Include="CollisionDetection\CollsionDetection.cs" />
+    <Compile Include="Planetoids\Planetoids.cs" />
+    <Compile Include="Player\PlayerCharacter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

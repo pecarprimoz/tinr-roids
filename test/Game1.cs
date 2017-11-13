@@ -27,21 +27,17 @@ namespace test
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
-        {
+        {   
+            //Nastavimo velikost igralnega zaslona
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.PreferredBackBufferHeight = screenHeight;
-            timeSinceShot = 0;
             graphics.ApplyChanges();
-            numberOfRocks = 25;
+            //Inicializacija kamnov in metkov
+            numberOfRocks = 15;
             numberOfBullets = 100;
+            //Čas od kadar smo vstrelili
+            timeSinceShot = 0;
             // Init sprites
             character = new PlayerCharacter(this.GraphicsDevice);
             my_bullets = new List<Projectile>();
@@ -58,95 +54,33 @@ namespace test
 
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
-            // TODO: use this.Content to load your game content here
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            timeSinceShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            timeSinceShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //Trenutno stanje tipkovnice
             KeyboardState state = Keyboard.GetState();
-            Vector2 direction = Vector2.Zero;
-            if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0.5 && character.getDirection().X < -0.5 && character.getDirection().Y > 0.5 && character.getDirection().Y < -0.5)
-                direction += new Vector2(0, -1);
-            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X < 0.5 && character.getDirection().X > -0.5 )
-                direction += new Vector2(0, 1);
-            else if (state.IsKeyDown(Keys.Up)  && character.getDirection().X< 0 && character.getDirection().Y > -0.5 && character.getDirection().Y < 0.5)
-                direction += new Vector2(-1, 0);
-            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0 && character.getDirection().Y > -0.5 && character.getDirection().Y < 0.5)
-                direction += new Vector2(1, 0);
-            foreach (Background bg in my_backs.getBackgroundList())
-            {
-                if (bg.autoMove)
-                {
-                    direction += new Vector2(0, 1);
-                }
-                bg.Update(gameTime, direction, GraphicsDevice.Viewport);
-            }
-            // TODO: Add your update logic here
-            character.checkControls(state);
-            for(int j=0; j < numberOfBullets; j++)
-            {
-                my_bullets[j].UpdateWithShip(character, screenWidth, screenHeight);
-                if (!my_bullets[j].getisFlying()) { 
-                    if (timeSinceShot > 0.1) {
-                        // Console.WriteLine(j);
-                        my_bullets[j].checkControls(state);
-                        timeSinceShot = 0;
-                    }
-                }
-            }
-            for (int i = 0; i < numberOfRocks; i++)
-            {
-                my_rocks[i].checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
-                my_rocks[i].Update(gameTime);
-                CollsionDetection _charCollision = character.getCollision();
-                CollsionDetection _rockCollision = my_rocks[i].getCollision();
-
-                if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision))
-                {
-                    character.setIsAlive(false);
-                }
-                for (int j = 0; j < numberOfBullets; j++)
-                {
-                    if (my_bullets[j].getisFlying())
-                    {
-                        CollsionDetection _bulletCollision = my_bullets[j].getCollision();
-                        if (_bulletCollision.DoRectangleCircleOverlap(_rockCollision, _bulletCollision)){
-                            my_rocks[i].setIsHit(true);
-                            my_rocks.Remove(my_rocks[i]);
-                            numberOfRocks--;
-                        }
-                    }
-                }
-            }
-            character.checkIfGoingTroughScreenEdges(screenWidth,screenHeight);
+            //Preverim kontrole igralca, preverim, ali gre igralec skozi 
+            character.checkControls(state, screenWidth, screenHeight);
+            
+            //Posodabljanje metkov, v primeru da metrki ne letijo jih posodabljam z ladjo
+            updateGameBullets(state);
+            //Posodabljanje parallax backgrounda
+            updateGameParralax(state, gameTime);
+            //Posodabljanje kolizij in kamnov
+            updateGameRocksCollision(gameTime);
             base.Update(gameTime);
         }
 
@@ -161,28 +95,86 @@ namespace test
             
             foreach (Background bg in my_backs.getBackgroundList())
             {
-                
                 bg.Draw(spriteBatch);
             }
+            //Izris karakterja
             character.Draw(spriteBatch);
+            //Izris metkov
             for (int j = 0; j < numberOfBullets; j++)
             {
                 if(my_bullets[j].getisFlying())
-                my_bullets[j].Draw(spriteBatch);
+                    my_bullets[j].Draw(spriteBatch);
             }
-            //Izris karakterja
-            
             //Izris planetov
             for (int i = 0; i < numberOfRocks; i++)
             {
                 my_rocks[i].Draw(spriteBatch);
             }
-            
             spriteBatch.End();
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
+        }
+
+        //Pomožne funkcije za lepoto update funkcije
+        public void updateGameBullets(KeyboardState state)
+        {
+            for (int j = 0; j < numberOfBullets; j++)
+            {
+                my_bullets[j].UpdateWithShip(character, screenWidth, screenHeight);
+                //V primeru da metek leti, in da nismo streljali že 0.1 sekunde, izstrelimo metek
+                if (!my_bullets[j].getisFlying())
+                {
+                    if (timeSinceShot > 0.1)
+                    {
+                        // Console.WriteLine(j);
+                        my_bullets[j].checkControls(state);
+                        timeSinceShot = 0;
+                    }
+                }
+            }
+        }
+        public void updateGameParralax(KeyboardState state, GameTime gameTime)
+        {
+            //Posodabljam parallax background svoje igre, če je 6 in 7 slika je automove (space debris)
+            Vector2 direction = my_backs.checkDirection(state, character);
+            foreach (Background bg in my_backs.getBackgroundList())
+            {
+                if (bg.autoMove)
+                {
+                    direction += new Vector2(0, 1);
+                }
+                bg.Update(gameTime, direction, GraphicsDevice.Viewport);
+            }
+        }
+        public void updateGameRocksCollision(GameTime gameTime)
+        {
+            for (int i = 0; i < numberOfRocks; i++)
+            {
+                int rockR = my_rocks[i].getRockR();
+                my_rocks[i].checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
+                my_rocks[i].Update(gameTime);
+                CollsionDetection _charCollision = character.getCollision();
+                CollsionDetection _rockCollision = my_rocks[i].getCollision();
+
+                if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision,rockR))
+                {
+                    character.setIsAlive(false);
+                    numberOfBullets = 0;
+                }
+                for (int j = 0; j < numberOfBullets; j++)
+                {
+                    if (my_bullets[j].getisFlying())
+                    {
+                        CollsionDetection _bulletCollision = my_bullets[j].getCollision();
+                        if (_bulletCollision.DoRectangleCircleOverlap(_rockCollision, _bulletCollision,rockR))
+                        {
+                            my_rocks[i].setIsHit(true);
+                            my_rocks.Remove(my_rocks[i]);
+                            numberOfRocks--;
+
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -4,18 +4,18 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Ships/barrier-frontier-spaceships.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Planetoids/planetoids.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_0.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_1.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_2.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_3.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_4.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_5.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_6.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_7.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Ships/main-ship-v1.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Projectiles/shotsmall.png</File>
-    <File>C:/Users/primoz-pc/source/repos/test/test/Content/Projectiles/shotoval.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Ships/barrier-frontier-spaceships.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Planetoids/planetoids.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_0.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_1.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_2.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_3.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_4.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_5.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_6.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_7.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Ships/main-ship-v1.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Projectiles/shotsmall.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Projectiles/shotoval.png</File>
   </SourceFiles>
 </SourceFileCollection>

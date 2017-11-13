@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/primoz-pc/source/repos/test/test/Content/Background/bkgd_1.png</SourceFile>
-  <SourceTime>2017-10-11T15:05:47.4947159+02:00</SourceTime>
-  <DestFile>C:/Users/primoz-pc/source/repos/test/test/Content/bin/Windows/Background/bkgd_1.xnb</DestFile>
-  <DestTime>2017-11-03T22:15:14.5271041+01:00</DestTime>
+  <SourceFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_1.png</SourceFile>
+  <SourceTime>2017-11-12T10:30:35.5538131+01:00</SourceTime>
+  <DestFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/bin/Windows/Background/bkgd_1.xnb</DestFile>
+  <DestTime>2017-11-12T12:36:42.4106377+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

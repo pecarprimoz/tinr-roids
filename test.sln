@@ -1,17 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asteroidsSpaceAdventure", "test\asteroidsSpaceAdventure.csproj", "{38F60AE4-26DE-43F6-8238-F9F0484608E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		android|x86 = android|x86
 		Content|x86 = Content|x86
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38F60AE4-26DE-43F6-8238-F9F0484608E8}.android|x86.ActiveCfg = Debug|x86
+		{38F60AE4-26DE-43F6-8238-F9F0484608E8}.android|x86.Build.0 = Debug|x86
 		{38F60AE4-26DE-43F6-8238-F9F0484608E8}.Content|x86.ActiveCfg = Content|x86
 		{38F60AE4-26DE-43F6-8238-F9F0484608E8}.Content|x86.Build.0 = Content|x86
 		{38F60AE4-26DE-43F6-8238-F9F0484608E8}.Debug|x86.ActiveCfg = Debug|x86

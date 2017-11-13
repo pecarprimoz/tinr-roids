@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/primoz-pc/source/repos/test/test/Content/Projectiles/shotsmall.png</SourceFile>
-  <SourceTime>2017-10-11T16:39:51.7870901+02:00</SourceTime>
-  <DestFile>C:/Users/primoz-pc/source/repos/test/test/Content/bin/Windows/Projectiles/shotsmall.xnb</DestFile>
-  <DestTime>2017-11-06T16:57:09.6358243+01:00</DestTime>
+  <SourceFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Projectiles/shotsmall.png</SourceFile>
+  <SourceTime>2017-11-12T10:30:35.5850666+01:00</SourceTime>
+  <DestFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/bin/Windows/Projectiles/shotsmall.xnb</DestFile>
+  <DestTime>2017-11-12T12:36:44.743831+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
