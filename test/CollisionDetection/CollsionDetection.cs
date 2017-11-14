@@ -103,7 +103,7 @@ namespace test
             texture.SetData(data);
             return texture;
         }
-        //#TODO, CHANGE THE 30 TO CIRCLE.R
+        //#TODO, CHANGE THE 30 TO CIRCLE.R, DONE
         public bool DoRectangleCircleOverlap(CollsionDetection cir, CollsionDetection rect, int _circSize)
         {
             Vector2 circleDistance;
@@ -120,6 +120,16 @@ namespace test
 
             return (cornerDistance_sq <= (_circSize ^ 2));
 
+        }
+        public bool DoCircleCircleOverlap(CollsionDetection cirA, CollsionDetection cirB,int _cirSizeA,int _cirSizeB)
+        {
+            
+            float dx = cirA._position.X - cirB._position.X;
+            float dy = cirA._position.Y - cirB._position.Y;
+            int radii = _cirSizeA + _cirSizeB;
+            int sqrradi = radii * radii;
+            float distsqrt = (dx * dx) + (dy * dy);
+            return (distsqrt <= sqrradi);
         }
 
     }

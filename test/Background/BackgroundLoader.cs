@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,16 +56,53 @@ namespace test
             }
         }
         public Vector2 checkDirection(KeyboardState state, PlayerCharacter character)
-        {
+        {   // VSE LEPO POPRAVLJENO, ASK BROTHER ABOUT THIS IF CLAUSE CUZ IKD ANYMORE
             Vector2 direction = Vector2.Zero;
-            if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0.5 && character.getDirection().X < -0.5 && character.getDirection().Y > 0.5 && character.getDirection().Y < -0.5)
+            Vector2 playerDirection = character.getDirection();
+            //U
+            if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -1/4 && playerDirection.X < 1/4) && (playerDirection.Y < 0))
+            {
                 direction += new Vector2(0, -1);
-            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X < 0.5 && character.getDirection().X > -0.5)
-                direction += new Vector2(0, 1);
-            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X < 0 && character.getDirection().Y > -0.5 && character.getDirection().Y < 0.5)
+            }
+            //D
+            
+            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -1 / 4 && playerDirection.X < 1 / 4) && (playerDirection.Y > 0))
+            {
+                direction += new Vector2(0, -1);
+            }
+            //L
+            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X < 0) && (playerDirection.Y < 1 / 4 && playerDirection.Y > -1 / 4))
+            {
                 direction += new Vector2(-1, 0);
-            else if (state.IsKeyDown(Keys.Up) && character.getDirection().X > 0 && character.getDirection().Y > -0.5 && character.getDirection().Y < 0.5)
-                direction += new Vector2(1, 0);
+            }
+            //R
+            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > 0) && (playerDirection.Y < 1 / 4 && playerDirection.Y > -1 / 4))
+            {
+                direction += new Vector2(1, 1);
+            }
+            //UL
+            else { 
+                if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -1 && playerDirection.X < 0) && (playerDirection.Y < 0))
+                {
+                    direction += new Vector2(-1, -1);
+                }
+                //UR
+                else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > 0 && playerDirection.X<1) && (playerDirection.Y < 0))
+                {
+                    direction += new Vector2(1, -1);
+                }
+                //DL
+                else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -1 && playerDirection.X < 0) && (playerDirection.Y > 0))
+                {
+                    direction += new Vector2(-1, 1);
+                }
+                //DR
+                else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > 0 && playerDirection.X < 1) && (playerDirection.Y > 0))
+                {
+                    direction += new Vector2(1, 1);
+                }
+            }
+
             return direction;
         }
     }

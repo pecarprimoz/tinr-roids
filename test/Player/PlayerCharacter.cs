@@ -101,11 +101,11 @@ namespace test
                 checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
                 if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
-                    _angle -= 0.05f;
+                    _angle -= 0.1f;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
-                    _angle += 0.05f;
+                    _angle += 0.1f;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Up))
                 {

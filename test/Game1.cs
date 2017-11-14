@@ -13,7 +13,7 @@ namespace test
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerCharacter character;
-        int screenWidth = 800;
+        int screenWidth = 400;
         int screenHeight = 600;
         int numberOfRocks;
         int numberOfBullets;
@@ -70,6 +70,8 @@ namespace test
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             timeSinceShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector2 debug_direction = character.getDirection();
+            //Console.WriteLine(debug_direction);
             //Trenutno stanje tipkovnice
             KeyboardState state = Keyboard.GetState();
             //Preverim kontrole igralca, preverim, ali gre igralec skozi 
@@ -145,15 +147,30 @@ namespace test
                 bg.Update(gameTime, direction, GraphicsDevice.Viewport);
             }
         }
+        
         public void updateGameRocksCollision(GameTime gameTime)
         {
+            //Console.WriteLine(my_rocks[0].getPosition());
             for (int i = 0; i < numberOfRocks; i++)
             {
                 int rockR = my_rocks[i].getRockR();
                 my_rocks[i].checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
-                my_rocks[i].Update(gameTime);
                 CollsionDetection _charCollision = character.getCollision();
                 CollsionDetection _rockCollision = my_rocks[i].getCollision();
+                for (int k = 0; k < numberOfRocks; k++)
+                {
+                    if (my_rocks[i] != my_rocks[k])
+                    {
+                        CollsionDetection _rockCollsionB = my_rocks[k].getCollision();
+                        int _rockRB = my_rocks[k].getRockR();
+                        if (_rockCollision.DoCircleCircleOverlap(_rockCollision, _rockCollsionB, rockR, _rockRB))
+                        {
+                            my_rocks[i].UpdateOnRockCollision(my_rocks[k]);
+                            
+                        }
+                    }
+                }
+                my_rocks[i].Update(gameTime);
 
                 if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision,rockR))
                 {
@@ -174,6 +191,7 @@ namespace test
                         }
                     }
                 }
+                
             }
         }
     }
