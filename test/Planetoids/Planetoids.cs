@@ -162,10 +162,8 @@ namespace test
         }
         public void UpdateOnRockCollision(Planetoids rockB)
         {
-            _actualPos += rockB._direction * _accel;
-            rockB._actualPos += _direction * _accel;
             // get the mtd
-            /* DOES NOT WORK LUL ?
+
             Vector2 delta = _actualPos - rockB._actualPos;
             float d = delta.Length();
             if (d < 0)
@@ -192,7 +190,7 @@ namespace test
 
             _accel = _accel * _direction + (impulse*im1);
             rockB._accel = rockB._accel * rockB._direction - (impulse*im2);
-            */
+
         }
 
     }

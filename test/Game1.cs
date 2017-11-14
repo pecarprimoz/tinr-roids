@@ -166,7 +166,6 @@ namespace test
                         if (_rockCollision.DoCircleCircleOverlap(_rockCollision, _rockCollsionB, rockR, _rockRB))
                         {
                             my_rocks[i].UpdateOnRockCollision(my_rocks[k]);
-                            
                         }
                     }
                 }
