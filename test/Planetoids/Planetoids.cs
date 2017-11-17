@@ -5,6 +5,7 @@ namespace test
 {
     class Planetoids
     {
+        //TODO SPREMEN PRIVATE PA NARED GETTERJE SETTERJE
         CollsionDetection _collision;
         Texture2D planetoidsSheet;
         Animation spin;
@@ -130,20 +131,19 @@ namespace test
         {
             if (!_isHit)
             {
-                //change hardcoded values
                 if (_actualPos.X > screenWidth)
                 {
                     _actualPos.X = 0;
                 }
-                if (_actualPos.X < 0)
+                else if (_actualPos.X < 0)
                 {
                     _actualPos.X = screenWidth;
                 }
-                if (_actualPos.Y > screenHeight)
+                else if (_actualPos.Y > screenHeight)
                 {
                     _actualPos.Y = 0;
                 }
-                if (_actualPos.Y < 0)
+                else if (_actualPos.Y < 0)
                 {
                     _actualPos.Y = screenHeight;
                 }
@@ -163,13 +163,11 @@ namespace test
         public void UpdateOnRockCollision(Planetoids rockB)
         {
             // get the mtd
-
+            Console.WriteLine("Rock 1:" + _actualPos);
+            Console.WriteLine("Rock 2:" + rockB._actualPos);
             Vector2 delta = _actualPos - rockB._actualPos;
             float d = delta.Length();
-            if (d < 0)
-            {
-                d = 0.2f;
-            }
+            
 
             Vector2 mtd = delta * (((getRockR() + rockB.getRockR()) - d) / d);
 
@@ -182,14 +180,15 @@ namespace test
 
             Vector2 v = (_accel*_direction)-(rockB._accel*rockB._direction);
             float vn = Vector2.Dot(v, Vector2.Normalize(mtd));
+            
 
             if (vn > 0.0f) return;
 
             float i = (-(1.0f + 0.2f) * vn) / (im1 + im2);
             Vector2 impulse =mtd*i;
 
-            _accel = _accel * _direction + (impulse*im1);
-            rockB._accel = rockB._accel * rockB._direction - (impulse*im2);
+            //_accel = _accel * _direction + (impulse*im1);
+            //rockB._accel = rockB._accel * rockB._direction - (impulse*im2);
 
         }
 

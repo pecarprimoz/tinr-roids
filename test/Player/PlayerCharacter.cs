@@ -68,15 +68,15 @@ namespace test
             {
                 _position.X = 0;
             }
-            if (_position.X < 0)
+            else if (_position.X < 0)
             {
                 _position.X = screenWidth;
             }
-            if (_position.Y > screenHeight)
+            else if (_position.Y > screenHeight)
             {
                 _position.Y = 0;
             }
-            if (_position.Y < 0)
+            else if (_position.Y < 0)
             {
                 _position.Y = screenHeight;
             }

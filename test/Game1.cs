@@ -13,7 +13,7 @@ namespace test
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerCharacter character;
-        int screenWidth = 400;
+        int screenWidth = 800;
         int screenHeight = 600;
         int numberOfRocks;
         int numberOfBullets;
@@ -34,7 +34,7 @@ namespace test
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.ApplyChanges();
             //Inicializacija kamnov in metkov
-            numberOfRocks = 15;
+            numberOfRocks = 25;
             numberOfBullets = 100;
             //Čas od kadar smo vstrelili
             timeSinceShot = 0;
@@ -75,14 +75,13 @@ namespace test
             //Trenutno stanje tipkovnice
             KeyboardState state = Keyboard.GetState();
             //Preverim kontrole igralca, preverim, ali gre igralec skozi 
+            updateGameRocksCollision(gameTime);
             character.checkControls(state, screenWidth, screenHeight);
-            
             //Posodabljanje metkov, v primeru da metrki ne letijo jih posodabljam z ladjo
             updateGameBullets(state);
             //Posodabljanje parallax backgrounda
             updateGameParralax(state, gameTime);
             //Posodabljanje kolizij in kamnov
-            updateGameRocksCollision(gameTime);
             base.Update(gameTime);
         }
 

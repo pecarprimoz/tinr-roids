@@ -59,26 +59,26 @@ namespace test
         {   // VSE LEPO POPRAVLJENO, ASK BROTHER ABOUT THIS IF CLAUSE CUZ IKD ANYMORE
             Vector2 direction = Vector2.Zero;
             Vector2 playerDirection = character.getDirection();
-            //U
-            if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -1/4 && playerDirection.X < 1/4) && (playerDirection.Y < 0))
+            //U cos(pi/4 + pi/8), TO UPORAB ZA SMERNICE LEVO DESNO GOR DOL
+            if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -0.38 && playerDirection.X < 0.38) && (playerDirection.Y < 0))
             {
                 direction += new Vector2(0, -1);
             }
             //D
             
-            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -1 / 4 && playerDirection.X < 1 / 4) && (playerDirection.Y > 0))
+            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > -0.38 && playerDirection.X < 0.38) && (playerDirection.Y > 0))
             {
-                direction += new Vector2(0, -1);
+                direction += new Vector2(0, 1);
             }
             //L
-            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X < 0) && (playerDirection.Y < 1 / 4 && playerDirection.Y > -1 / 4))
+            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X < 0) && (playerDirection.Y < 0.38 && playerDirection.Y > -0.38))
             {
                 direction += new Vector2(-1, 0);
             }
             //R
-            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > 0) && (playerDirection.Y < 1 / 4 && playerDirection.Y > -1 / 4))
+            else if (state.IsKeyDown(Keys.Up) && (playerDirection.X > 0) && (playerDirection.Y < 0.38 && playerDirection.Y > -0.38))
             {
-                direction += new Vector2(1, 1);
+                direction += new Vector2(1, 0);
             }
             //UL
             else { 

@@ -56,7 +56,6 @@ namespace test
             _height = spriteHeight;
             _angle = ag;
             _type = typeOfCollision;
-
             
             if (typeOfCollision == 2)
             {
