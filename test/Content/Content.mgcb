@@ -169,3 +169,10 @@
 /processorParam:TextureFormat=Color
 /build:Projectiles/shotoval.png
 
+#begin Fonts/ScreenUI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:Fonts/ScreenUI.spritefont
+

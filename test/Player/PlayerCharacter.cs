@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace test
 {
     class PlayerCharacter
     {
         //Atlas vseh ladji
-        static Texture2D spaceShipsSheet;
+        Texture2D spaceShipsSheet;
         CollsionDetection _collision;
         bool _driving;
         bool _isAlive;
@@ -23,9 +24,21 @@ namespace test
         {
             return _collision;
         }
+        public void setDirection(Vector2 dir)
+        {
+            _direction = dir;
+        }
+        public void setPosition(Vector2 pos)
+        {
+            _position = pos;
+        }
         public Vector2 getPosition()
         {
             return _position;
+        }
+        public bool getIsAlive()
+        {
+            return _isAlive;
         }
         public Vector2 getDirection()
         {
@@ -93,11 +106,20 @@ namespace test
             }
         }
 
-        public void checkControls(KeyboardState state, int screenWidth, int screenHeight)
+        public void checkControls(KeyboardState state, int screenWidth, int screenHeight, List<Planetoids> rocks)
         {
             if (_isAlive)
             {
-
+                if (Keyboard.GetState().IsKeyDown(Keys.R))
+                {
+                    int id = 0;
+                    foreach(Planetoids p in rocks)
+                    {
+                        Console.WriteLine(id+" "+p.getPosition().X+" "+p.getPosition().Y);
+                        id++;
+                    }
+                    
+                }
                 checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
                 if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {

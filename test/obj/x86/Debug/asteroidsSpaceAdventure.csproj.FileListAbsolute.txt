@@ -74,3 +74,4 @@ C:\Users\primoz-windowsi\source\repos\tinr-roids\test\obj\x86\Debug\asteroidsSpa
 C:\Users\primoz-windowsi\source\repos\tinr-roids\test\obj\x86\Debug\test.exe
 C:\Users\primoz-windowsi\source\repos\tinr-roids\test\obj\x86\Debug\test.pdb
 C:\Users\primoz-windowsi\source\repos\tinr-roids\test\obj\x86\Debug\asteroidsSpaceAdventure.csprojResolveAssemblyReference.cache
+C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Content\Fonts\ScreenUI.xnb

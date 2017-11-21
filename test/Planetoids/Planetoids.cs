@@ -6,6 +6,7 @@ namespace test
     class Planetoids
     {
         //TODO SPREMEN PRIVATE PA NARED GETTERJE SETTERJE
+        //TODO, MAKE SMART SPAWNING, THEY NEED TO COME FROM THE SIDES
         CollsionDetection _collision;
         Texture2D planetoidsSheet;
         Animation spin;
@@ -96,7 +97,7 @@ namespace test
             _actualPos.X = _startPosX;
             _actualPos.Y = _startPosY;
             rockR = 65 / size_reduction;
-            _mass = 5 / size_reduction;
+            _mass = 5 / size_reduction* (int)(1 + r.NextDouble());
             //Console.WriteLine(_actualPos);
             if (planetoidsSheet == null)
             {
@@ -165,30 +166,31 @@ namespace test
             // get the mtd
             Console.WriteLine("Rock 1:" + _actualPos);
             Console.WriteLine("Rock 2:" + rockB._actualPos);
-            Vector2 delta = _actualPos - rockB._actualPos;
-            float d = delta.Length();
+            float m1 = getMass();
+            float m2 = rockB.getMass();
             
+            Vector2 Norm, Vel1, Vel2;
 
-            Vector2 mtd = delta * (((getRockR() + rockB.getRockR()) - d) / d);
+            Vel1 = _accel;
 
-            float im1 = 1 / getMass() ;
-            float im2 = 1 / rockB.getMass();
-            
-            _actualPos = _actualPos+(mtd*(im1 / (im1 + im2)));
-            rockB._actualPos = rockB._actualPos-(mtd*(im2 / (im1 + im2)));
-            
+            Vel2 = rockB._accel;
 
-            Vector2 v = (_accel*_direction)-(rockB._accel*rockB._direction);
-            float vn = Vector2.Dot(v, Vector2.Normalize(mtd));
-            
+            Norm = _actualPos - rockB._actualPos;
 
-            if (vn > 0.0f) return;
+            Vector2.Normalize(Norm);
 
-            float i = (-(1.0f + 0.2f) * vn) / (im1 + im2);
-            Vector2 impulse =mtd*i;
+            float ClosingVel = Vector2.Dot((Vel1-Vel2),Norm);
+            float Impulse1, Impulse2;
+            float el1 = 1/(m1), el2 = 1/(m2);
+            Impulse1 = (-(1 + el1) * ClosingVel) / ((1 / m1) + (1 / m2));
 
-            //_accel = _accel * _direction + (impulse*im1);
-            //rockB._accel = rockB._accel * rockB._direction - (impulse*im2);
+            Impulse2 = (-(1 + el2) * ClosingVel) / ((1 / m1) + (1 / m2));
+            //TODO SET ELASTICITY AND ROCK DISTANCES, THEY ARE CURRENTLY FIXED VALUES !!!!!!
+            _actualPos = _actualPos + ((m2 / (m1 + m2) *0.01f) * Norm);
+            rockB._actualPos = rockB._actualPos - ((m1 / (m1 + m2) *0.01f) * Norm);
+
+            _accel = Vel1 + ((Impulse1 / m1) * Norm);
+            rockB._accel = Vel2 - ((Impulse2 / m2) * Norm);
 
         }
 

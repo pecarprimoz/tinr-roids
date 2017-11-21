@@ -122,7 +122,6 @@ namespace test
         }
         public bool DoCircleCircleOverlap(CollsionDetection cirA, CollsionDetection cirB,int _cirSizeA,int _cirSizeB)
         {
-            
             float dx = cirA._position.X - cirB._position.X;
             float dy = cirA._position.Y - cirB._position.Y;
             int radii = _cirSizeA + _cirSizeB;

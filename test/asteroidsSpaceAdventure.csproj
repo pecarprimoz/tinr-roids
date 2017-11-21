@@ -65,6 +65,7 @@
     <Compile Include="Animation\AnimationFrame.cs" />
     <Compile Include="Background\Background.cs" />
     <Compile Include="Background\BackgroundLoader.cs" />
+    <Compile Include="GameLogic.cs" />
     <Compile Include="Projectile\Projectile.cs" />
     <Compile Include="CollisionDetection\CollsionDetection.cs" />
     <Compile Include="Planetoids\Planetoids.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
