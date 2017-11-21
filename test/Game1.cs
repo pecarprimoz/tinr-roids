@@ -44,7 +44,7 @@ namespace test
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.ApplyChanges();
             //Inicializacija kamnov in metkov
-            numberOfRocks = 10;
+            numberOfRocks = 7;
             numberOfBullets = 100;
             playerHP = 3;
             //Čas od kadar smo vstrelili

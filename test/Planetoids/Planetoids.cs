@@ -97,7 +97,7 @@ namespace test
             _actualPos.X = _startPosX;
             _actualPos.Y = _startPosY;
             rockR = 65 / size_reduction;
-            _mass = 5 / size_reduction* (int)(1 + r.NextDouble());
+            _mass = 5 / size_reduction;
             //Console.WriteLine(_actualPos);
             if (planetoidsSheet == null)
             {
@@ -156,13 +156,14 @@ namespace test
         {
             if (!_isHit)
             {
-                _actualPos += _direction * _accel;
+                _actualPos =_actualPos + _direction * _accel;
                 currentAnimation = spin;
                 currentAnimation.Update(gametime);
             }
         }
         public void UpdateOnRockCollision(Planetoids rockB)
         {
+            /*
             // get the mtd
             Console.WriteLine("Rock 1:" + _actualPos);
             Console.WriteLine("Rock 2:" + rockB._actualPos);
@@ -178,20 +179,19 @@ namespace test
             Norm = _actualPos - rockB._actualPos;
 
             Vector2.Normalize(Norm);
-
-            float ClosingVel = Vector2.Dot((Vel1-Vel2),Norm);
+            float ClosingVel = Vector2.Dot((Vel1 - Vel2), Norm);
             float Impulse1, Impulse2;
-            float el1 = 1/(m1), el2 = 1/(m2);
+            float el1 = 1 / (m1), el2 = 1 / (m2);
             Impulse1 = (-(1 + el1) * ClosingVel) / ((1 / m1) + (1 / m2));
 
             Impulse2 = (-(1 + el2) * ClosingVel) / ((1 / m1) + (1 / m2));
             //TODO SET ELASTICITY AND ROCK DISTANCES, THEY ARE CURRENTLY FIXED VALUES !!!!!!
-            _actualPos = _actualPos + ((m2 / (m1 + m2) *0.01f) * Norm);
-            rockB._actualPos = rockB._actualPos - ((m1 / (m1 + m2) *0.01f) * Norm);
+            _actualPos = _actualPos + ((m2 / (m1 + m2) * 0.01f) * Norm);
+            rockB._actualPos = rockB._actualPos - ((m1 / (m1 + m2) * 0.01f) * Norm);
 
-            _accel = Vel1 + ((Impulse1 / m1) * Norm);
-            rockB._accel = Vel2 - ((Impulse2 / m2) * Norm);
-
+            _accel = Vel1 + ((Impulse1 / m1) * Norm*_direction);
+            rockB._accel = Vel2 - ((Impulse2 / m2) * Norm*rockB._direction);
+            */
         }
 
     }
