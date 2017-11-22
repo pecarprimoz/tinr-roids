@@ -89,7 +89,7 @@ namespace test
                 Exit();
             if (gameLogic.getNumRocks() <= 0)
             {
-
+                invulnTimer = 0.0f;
                 gameLogic.SetNumberOfRocks(10);
                 numberOfRocks = 10;
                 for (int i = 0; i < numberOfRocks; i++)
@@ -202,15 +202,17 @@ namespace test
         }
         public void updateGameParralax(KeyboardState state, GameTime gameTime)
         {
-            //Posodabljam parallax background svoje igre, če je 6 in 7 slika je automove (space debris)
-            Vector2 direction = my_backs.checkDirection(state, character);
-            foreach (Background bg in my_backs.getBackgroundList())
-            {
-                if (bg.autoMove)
+            if (character.getIsAlive()) { 
+                //Posodabljam parallax background svoje igre, če je 6 in 7 slika je automove (space debris)
+                Vector2 direction = my_backs.checkDirection(state, character);
+                foreach (Background bg in my_backs.getBackgroundList())
                 {
-                    direction += new Vector2(0, 1);
+                    if (bg.autoMove)
+                    {
+                        direction += new Vector2(0, 1);
+                    }
+                    bg.Update(gameTime, direction, GraphicsDevice.Viewport);
                 }
-                bg.Update(gameTime, direction, GraphicsDevice.Viewport);
             }
         }
         
