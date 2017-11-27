@@ -139,9 +139,9 @@ namespace test
                     _direction = new Vector2((float)Math.Sin(_angle), -(float)Math.Cos(_angle));
                     _position += _direction * _accel;
                     _accel += 0.2f;
-                    if (_accel > 10)
+                    if (_accel > 5)
                     {
-                        _accel = 10;
+                        _accel = 5;
                     }
                 }
                 else

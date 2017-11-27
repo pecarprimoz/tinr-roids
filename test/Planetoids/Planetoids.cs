@@ -39,7 +39,7 @@ namespace test
         }
         public void setIsHit(bool b)
         {
-            _isHit = true;
+            _isHit = b;
         }
         public Vector2 getDirection()
         {
@@ -160,6 +160,10 @@ namespace test
                 currentAnimation = spin;
                 currentAnimation.Update(gametime);
             }
+        }
+        public void splitRockIntoTwo()
+        {
+
         }
         public void UpdateOnRockCollision(Planetoids rockB)
         {

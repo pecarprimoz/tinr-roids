@@ -5,6 +5,7 @@ using System;
 
 namespace test
 {
+    
     class Projectile
     {
         Texture2D projectileSheet;
@@ -16,7 +17,11 @@ namespace test
         float _angle;
         float _width;
         float _height;
-
+        public void RefreshProjectile()
+        {
+            isFlying = false;
+            canShoot = true;
+        }
         public Texture2D getProjectileSheet()
         {
             return projectileSheet;
@@ -69,7 +74,11 @@ namespace test
                 _direction = pc.getDirection();
                 _angle = pc.getAngle();
             }
-            _position += _direction * 15;
+            _position += _direction * 7;
+        }
+        public bool isOutOfBounds(int width,int height)
+        {
+            return (_position.X > width || _position.X < 0) || (_position.Y > height || _position.Y < 0);
         }
         public void Draw(SpriteBatch spriteBatch)
         {

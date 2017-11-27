@@ -44,8 +44,8 @@ namespace test
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.ApplyChanges();
             //Inicializacija kamnov in metkov
-            numberOfRocks = 7;
-            numberOfBullets = 100;
+            numberOfRocks = 3;
+            numberOfBullets = 3;
             playerHP = 3;
             //Čas od kadar smo vstrelili
             timeSinceShot = 0;
@@ -87,11 +87,12 @@ namespace test
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             if (gameLogic.getNumRocks() <= 0)
             {
+                numberOfRocks = 3;
                 invulnTimer = 0.0f;
-                gameLogic.SetNumberOfRocks(10);
-                numberOfRocks = 10;
+                gameLogic.SetNumberOfRocks(numberOfRocks);
                 for (int i = 0; i < numberOfRocks; i++)
                 {
                     my_rocks.Add(new Planetoids(this.GraphicsDevice));
@@ -102,6 +103,7 @@ namespace test
             //Console.WriteLine(debug_direction);
             //Trenutno stanje tipkovnice
             KeyboardState state = Keyboard.GetState();
+            updateGameParralax(state, gameTime);
             //Preverim kontrole igralca, preverim, ali gre igralec skozi 
             updateGameRocksCollision(gameTime);
             if (gameLogic.getPlayerHP() > 0) { 
@@ -120,21 +122,18 @@ namespace test
                     invulnTimer = 0.0f;
                     gameLogic.setPlayerHp(-1);
                     ui_playerHP_NUMS.UpdateValues("x " + gameLogic.getPlayerHP());
-                    Console.WriteLine("beep respawn");
-                    numberOfBullets = 100;
-                    my_bullets = new List<Projectile>();
-                    for (int j = 0; j < numberOfBullets; j++)
-                    {
-                        my_bullets.Add(new Projectile(this.GraphicsDevice));
-                    }
+                    //Console.WriteLine("beep respawn");
                     character.setPosition(new Vector2(screenWidth / 2, screenHeight / 2));
                     respawnTimer = 0;
                     character.setIsAlive(true);
+                    foreach(Projectile p in my_bullets)
+                    {
+                        p.RefreshProjectile();
+                    }
                     //todo make him indestructable for a short period
                 }
             }
             //Posodabljanje parallax backgrounda
-            updateGameParralax(state, gameTime);
             //Posodabljanje kolizij in kamnov
             ui_score_NUMS.UpdateValues(gameLogic.getScore().ToString());
             ui_rocks_REMAIN.UpdateValues(gameLogic.getNumRocks().ToString());
@@ -160,19 +159,19 @@ namespace test
                 if (character.getIsAlive()) { 
                     character.Draw(spriteBatch);
                     //Izris metkov
-                    for (int j = 0; j < numberOfBullets; j++)
+                    foreach(Projectile p in my_bullets)
                     {
-                        if(my_bullets[j].getisFlying())
-                            my_bullets[j].Draw(spriteBatch);
+                        if (p.getisFlying())
+                            p.Draw(spriteBatch);
                     }
                 }
             }
             ui_rocks_NUMOFROCKS.DrawFont(spriteBatch);
             ui_rocks_REMAIN.DrawFont(spriteBatch);
             //Izris planetov
-            for (int i = 0; i < numberOfRocks; i++)
+            foreach(Planetoids rock in my_rocks)
             {
-                my_rocks[i].Draw(spriteBatch);
+                rock.Draw(spriteBatch);
             }
             ui_score_SCORE.DrawFont(spriteBatch);
             ui_score_NUMS.DrawFont(spriteBatch);
@@ -185,16 +184,14 @@ namespace test
         //Pomožne funkcije za lepoto update funkcije
         public void updateGameBullets(KeyboardState state)
         {
-            for (int j = 0; j < numberOfBullets; j++)
-            {
-                my_bullets[j].UpdateWithShip(character, screenWidth, screenHeight);
+            foreach(Projectile p in my_bullets) {
+                p.UpdateWithShip(character, screenWidth, screenHeight);
                 //V primeru da metek leti, in da nismo streljali že 0.1 sekunde, izstrelimo metek
-                if (!my_bullets[j].getisFlying())
+                if (!p.getisFlying())
                 {
-                    if (timeSinceShot > 0.1)
+                    if (timeSinceShot > 0.5)
                     {
-                        // Console.WriteLine(j);
-                        my_bullets[j].checkControls(state);
+                        p.checkControls(state);
                         timeSinceShot = 0;
                     }
                 }
@@ -202,8 +199,8 @@ namespace test
         }
         public void updateGameParralax(KeyboardState state, GameTime gameTime)
         {
+            //Posodabljam parallax background svoje igre, če je 6 in 7 slika je automove (space debris)
             if (character.getIsAlive()) { 
-                //Posodabljam parallax background svoje igre, če je 6 in 7 slika je automove (space debris)
                 Vector2 direction = my_backs.checkDirection(state, character);
                 foreach (Background bg in my_backs.getBackgroundList())
                 {
@@ -214,17 +211,26 @@ namespace test
                     bg.Update(gameTime, direction, GraphicsDevice.Viewport);
                 }
             }
+            else
+            {
+                foreach(Background bg in my_backs.getBackgroundList())
+                {
+                    Vector2 direction = new Vector2(0, 1);
+                    bg.Update(gameTime, direction, GraphicsDevice.Viewport);
+
+                }
+            }
         }
         
         public void updateGameRocksCollision(GameTime gameTime)
         {
             //Console.WriteLine(my_rocks[0].getPosition());
-            for (int i = 0; i < numberOfRocks; i++)
-            {
-                int rockR = my_rocks[i].getRockR();
-                my_rocks[i].checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
+            foreach(Planetoids rock in my_rocks.ToArray()) { 
+                int rockR = rock.getRockR();
+                rock.checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
                 CollsionDetection _charCollision = character.getCollision();
-                CollsionDetection _rockCollision = my_rocks[i].getCollision();
+                CollsionDetection _rockCollision = rock.getCollision();
+                /*
                 for (int k = 0; k < numberOfRocks; k++)
                 {
                     if (my_rocks[i] != my_rocks[k])
@@ -237,29 +243,44 @@ namespace test
                         }
                     }
                 }
-                my_rocks[i].Update(gameTime);
-
-                if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision,rockR) && invulnTimer>3.0f)
+                */
+                rock.Update(gameTime);
+                if (_charCollision.DoRectangleCircleOverlap(_rockCollision, _charCollision,rockR) && invulnTimer>0.2f)
                 {
                     playerHP--;
                     character.setIsAlive(false);
                     //when player dies, set respawn in update, handle ui
-                    numberOfBullets = 0;
                 }
-                for (int j = 0; j < numberOfBullets; j++)
+                foreach(Projectile p in my_bullets)
                 {
-                    if (my_bullets[j].getisFlying())
+                    if (p.getisFlying())
                     {
-                        CollsionDetection _bulletCollision = my_bullets[j].getCollision();
+                        if (p.isOutOfBounds(screenWidth,screenHeight))
+                        {   //fuck yeah look at my smart bullets 
+                            //Console.WriteLine("im out sry bro");
+                            p.RefreshProjectile();
+                        }
+                        CollsionDetection _bulletCollision = p.getCollision();
                         if (_bulletCollision.DoRectangleCircleOverlap(_rockCollision, _bulletCollision,rockR))
                         {
-                            my_bullets.Remove(my_bullets[j]);
-                            numberOfBullets--;
-                            my_rocks[i].setIsHit(true);
-                            my_rocks.Remove(my_rocks[i]);
-                            numberOfRocks--;
+                            p.RefreshProjectile();
+                            //Re workaj da se kamni splittajo TESTING
+                            rock.setIsHit(true);
+                            my_rocks.Remove(rock);
+                            //DODAJ KASNEJ CE TE ZADANEJO
+                            /*
+                             * SEDAJ BOS MOGU NARDIT SLEDECE
+                             * KO SE JE KLE ZGODL DA BOS HOTU PONOVNO DODAJAT NA SCENO, BOS TO DODAL V EN QUEUE, 
+                             * MAGAR NOV CLASS, POL PO UPDATE PA BOS DODAJAL PONOVNO NA SCENO,
+                             * TOREJ KLE ZAZNAS D SE JE ZADEL V KAMEN METEK
+                             * ZBRISES TA KAMEN, ZBRISES METEK DELA OK
+                             * SEDAJ BOS PA MOGU NA QUEUE DODAT DA SE NAJ SPAWNA NOV KAMEN OZ VEC KAMNOV
+                             * ODVISNO KAKO SE BOM ODLOCU, SAM MORS DODAJAT PO UPDATE,
+                             * NIKOLI NE POSODABLJAJ TRENUTNE ZANKE!!!!!!!!!
+                             * */
+                            //my_rocks.Add(new Planetoids(this.GraphicsDevice));
                             //Zmanjsamo kamne
-                            gameLogic.SetNumberOfRocks(-1);
+                            //gameLogic.SetNumberOfRocks(-1);
                             gameLogic.IncrementScore();
                         }
                     }
