@@ -10,6 +10,7 @@ namespace test
         CollsionDetection _collision;
         Texture2D planetoidsSheet;
         Animation spin;
+        PlayerCharacter character;
         Animation currentAnimation;
         float planetWidth;
         float planetHeight;
@@ -74,9 +75,26 @@ namespace test
                 default: return new Vector2(0, -1);
             }
         }
-        
-        public Planetoids(GraphicsDevice graphicsDevice)
+        public bool checkCollisionForSpawn(PlayerCharacter rect, int _circSize,int posXc, int posYc)
         {
+            Vector2 circleDistance;
+            circleDistance.X = Math.Abs((posXc - rect.getPosition().X));
+            circleDistance.Y = Math.Abs(posYc - rect.getPosition().Y);
+
+            if (circleDistance.X > (rect.getWidth() / 2 + _circSize)) { return false; }
+            if (circleDistance.Y > (rect.getHeight() / 2 + _circSize)) { return false; }
+
+            if (circleDistance.X <= (rect.getWidth() / 2)) { return true; }
+            if (circleDistance.Y <= (rect.getHeight() / 2)) { return true; }
+
+            double cornerDistance_sq = Math.Pow((circleDistance.X - rect.getWidth() / 2), 2) + Math.Pow((circleDistance.Y - rect.getHeight() / 2), 2);
+
+            return (cornerDistance_sq <= (_circSize ^ 2));
+        }
+        
+        public Planetoids(GraphicsDevice graphicsDevice, PlayerCharacter pc)
+        {
+            character = pc;
             Random r = new Random(DateTime.Now.Millisecond);
             _isHit = false;
             _accel.X = 1;
@@ -85,19 +103,22 @@ namespace test
             int _startPosY;
             _direction = generateNewDirection();
             //Console.WriteLine(_direction);
-            _startPosX = r.Next(0, (int)graphicsDevice.Viewport.Width);
-            _startPosY = r.Next(0, (int)graphicsDevice.Viewport.Height);
-
-            //fix collision detection so that R is set by size reduction, DONE
             int reduction_for_current_rock = r.Next(1, 5);
             size_reduction = reduction_for_current_rock;
             planetHeight = 130;
             planetWidth = 130;
             _angle = 0f;
-            _actualPos.X = _startPosX;
-            _actualPos.Y = _startPosY;
             rockR = 65 / size_reduction;
             _mass = 5 / size_reduction;
+            do
+            {
+                _startPosX = r.Next(0, graphicsDevice.Viewport.Width);
+                _startPosY = r.Next(0, graphicsDevice.Viewport.Height);
+            } while (checkCollisionForSpawn(character,rockR,_startPosX,_startPosY));
+
+            _actualPos.X = _startPosX;
+            _actualPos.Y = _startPosY;
+            //fix collision detection so that R is set by size reduction, DONE
             //Console.WriteLine(_actualPos);
             if (planetoidsSheet == null)
             {
@@ -160,10 +181,6 @@ namespace test
                 currentAnimation = spin;
                 currentAnimation.Update(gametime);
             }
-        }
-        public void splitRockIntoTwo()
-        {
-
         }
         public void UpdateOnRockCollision(Planetoids rockB)
         {

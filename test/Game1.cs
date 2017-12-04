@@ -44,16 +44,16 @@ namespace test
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.ApplyChanges();
             //Inicializacija kamnov in metkov
-            numberOfRocks = 3;
+            numberOfRocks = 10;
             numberOfBullets = 3;
             playerHP = 3;
             //Čas od kadar smo vstrelili
             timeSinceShot = 0;
             // Init sprites
-            gameLogic = new GameLogic(numberOfRocks, 3);
             character = new PlayerCharacter(this.GraphicsDevice);
             my_bullets = new List<Projectile>();
             my_rocks = new List<Planetoids>();
+            gameLogic = new GameLogic(numberOfRocks, playerHP,character,my_rocks);
             ui_rocks_NUMOFROCKS = new ScreenUI(Content, 210, 20, "NUM.OF ROCKS");
             ui_rocks_REMAIN = new ScreenUI(Content, 210, 40, gameLogic.getNumRocks().ToString());
             ui_score_SCORE = new ScreenUI(Content,55, 20, "SCORE");
@@ -64,7 +64,7 @@ namespace test
             my_backs = new BackgroundLoader(this.GraphicsDevice);
             for(int i=0; i<numberOfRocks; i++)
             {
-                my_rocks.Add(new Planetoids(this.GraphicsDevice));
+                my_rocks.Add(new Planetoids(this.GraphicsDevice,character));
             }
             for(int j=0; j<numberOfBullets; j++)
             {
@@ -90,12 +90,12 @@ namespace test
 
             if (gameLogic.getNumRocks() <= 0)
             {
-                numberOfRocks = 3;
+                numberOfRocks = 8;
                 invulnTimer = 0.0f;
                 gameLogic.SetNumberOfRocks(numberOfRocks);
                 for (int i = 0; i < numberOfRocks; i++)
                 {
-                    my_rocks.Add(new Planetoids(this.GraphicsDevice));
+                    my_rocks.Add(new Planetoids(this.GraphicsDevice, character));
                 }
             }
             timeSinceShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -130,7 +130,6 @@ namespace test
                     {
                         p.RefreshProjectile();
                     }
-                    //todo make him indestructable for a short period
                 }
             }
             //Posodabljanje parallax backgrounda
@@ -280,7 +279,7 @@ namespace test
                              * */
                             //my_rocks.Add(new Planetoids(this.GraphicsDevice));
                             //Zmanjsamo kamne
-                            //gameLogic.SetNumberOfRocks(-1);
+                            gameLogic.SetNumberOfRocks(-1);
                             gameLogic.IncrementScore();
                         }
                     }

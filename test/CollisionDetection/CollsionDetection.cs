@@ -102,7 +102,6 @@ namespace test
             texture.SetData(data);
             return texture;
         }
-        //#TODO, CHANGE THE 30 TO CIRCLE.R, DONE
         public bool DoRectangleCircleOverlap(CollsionDetection cir, CollsionDetection rect, int _circSize)
         {
             Vector2 circleDistance;

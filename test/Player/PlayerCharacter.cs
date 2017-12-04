@@ -24,6 +24,14 @@ namespace test
         {
             return _collision;
         }
+        public float getWidth()
+        {
+            return _width;
+        }
+        public float getHeight()
+        {
+            return _height;
+        }
         public void setDirection(Vector2 dir)
         {
             _direction = dir;

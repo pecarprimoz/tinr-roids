@@ -11,11 +11,15 @@ namespace test
         private long currentScore;
         private int numberOfRocks;
         private int playerLives;
-        public GameLogic(int rcks, int plLife)
+        private PlayerCharacter player;
+        private List<Planetoids> planets;
+        public GameLogic(int rcks, int plLife, PlayerCharacter ply, List<Planetoids> plnts)
         {
             currentScore = 0;
             numberOfRocks = rcks;
             playerLives = plLife;
+            player = ply;
+            planets = plnts;
         }
 
         public void IncrementScore()
