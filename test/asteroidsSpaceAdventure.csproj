@@ -61,6 +61,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="Animation\Animation.cs" />
     <Compile Include="Animation\AnimationFrame.cs" />
     <Compile Include="Background\Background.cs" />

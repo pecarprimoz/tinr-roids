@@ -10,6 +10,7 @@ namespace test
     /// </summary>
     public class Game1 : Game
     {
+        AI npc_testing;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlayerCharacter character;
@@ -44,12 +45,13 @@ namespace test
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.ApplyChanges();
             //Inicializacija kamnov in metkov
-            numberOfRocks = 10;
+            numberOfRocks = 1;
             numberOfBullets = 3;
             playerHP = 3;
             //Čas od kadar smo vstrelili
             timeSinceShot = 0;
             // Init sprites
+            npc_testing = new AI(this.GraphicsDevice);
             character = new PlayerCharacter(this.GraphicsDevice);
             my_bullets = new List<Projectile>();
             my_rocks = new List<Planetoids>();
@@ -64,7 +66,7 @@ namespace test
             my_backs = new BackgroundLoader(this.GraphicsDevice);
             for(int i=0; i<numberOfRocks; i++)
             {
-                my_rocks.Add(new Planetoids(this.GraphicsDevice,character));
+                my_rocks.Add(new Planetoids(this.GraphicsDevice));
             }
             for(int j=0; j<numberOfBullets; j++)
             {
@@ -90,12 +92,12 @@ namespace test
 
             if (gameLogic.getNumRocks() <= 0)
             {
-                numberOfRocks = 8;
+                numberOfRocks = 1;
                 invulnTimer = 0.0f;
                 gameLogic.SetNumberOfRocks(numberOfRocks);
                 for (int i = 0; i < numberOfRocks; i++)
                 {
-                    my_rocks.Add(new Planetoids(this.GraphicsDevice, character));
+                    my_rocks.Add(new Planetoids(this.GraphicsDevice));
                 }
             }
             timeSinceShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -134,6 +136,7 @@ namespace test
             }
             //Posodabljanje parallax backgrounda
             //Posodabljanje kolizij in kamnov
+            npc_testing.UpdateAI(screenWidth,screenHeight,character);
             ui_score_NUMS.UpdateValues(gameLogic.getScore().ToString());
             ui_rocks_REMAIN.UpdateValues(gameLogic.getNumRocks().ToString());
             invulnTimer+= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -148,11 +151,11 @@ namespace test
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
-            
             foreach (Background bg in my_backs.getBackgroundList())
             {
                 bg.Draw(spriteBatch);
             }
+            npc_testing.Draw(spriteBatch);
             //Izris karakterja
             if (gameLogic.getPlayerHP() > 0) { 
                 if (character.getIsAlive()) { 

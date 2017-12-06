@@ -53,6 +53,12 @@ namespace test
         public Vector2 generateNewDirection()
         {
             Random r = new Random(DateTime.Now.Millisecond);
+           
+            Vector2 dir = new Vector2();
+            dir.X = r.Next(-360, 360);
+            dir.Y = r.Next(-360, 360);
+            return Vector2.Normalize(dir);
+            /*
             int _mode = r.Next(0, 8);
             switch (_mode)
             {
@@ -73,34 +79,41 @@ namespace test
                 case (7):
                     return new Vector2(1, -1);
                 default: return new Vector2(0, -1);
+            }*/
+        }
+        public Vector2 setNegativeSpawnPoint(int w, int h)
+        {
+            Vector2 startPos = new Vector2();
+            Random r = new Random();
+            int startX, startY, randomVal;
+            startX = r.Next(0, 2);
+            startY = r.Next(0, 2);
+            randomVal = r.Next(90, 151);
+            if (startX == 0)
+            {
+                startPos.X = -randomVal;
             }
+            else
+            {
+                startPos.X = w + randomVal;
+            }
+            if (startY == 0)
+            {
+                startPos.Y = -randomVal;
+            }
+            else
+            {
+                startPos.Y = h + randomVal;
+            }
+            return startPos;
         }
-        public bool checkCollisionForSpawn(PlayerCharacter rect, int _circSize,int posXc, int posYc)
+
+        public Planetoids(GraphicsDevice graphicsDevice)
         {
-            Vector2 circleDistance;
-            circleDistance.X = Math.Abs((posXc - rect.getPosition().X));
-            circleDistance.Y = Math.Abs(posYc - rect.getPosition().Y);
-
-            if (circleDistance.X > (rect.getWidth() / 2 + _circSize)) { return false; }
-            if (circleDistance.Y > (rect.getHeight() / 2 + _circSize)) { return false; }
-
-            if (circleDistance.X <= (rect.getWidth() / 2)) { return true; }
-            if (circleDistance.Y <= (rect.getHeight() / 2)) { return true; }
-
-            double cornerDistance_sq = Math.Pow((circleDistance.X - rect.getWidth() / 2), 2) + Math.Pow((circleDistance.Y - rect.getHeight() / 2), 2);
-
-            return (cornerDistance_sq <= (_circSize ^ 2));
-        }
-        
-        public Planetoids(GraphicsDevice graphicsDevice, PlayerCharacter pc)
-        {
-            character = pc;
             Random r = new Random(DateTime.Now.Millisecond);
             _isHit = false;
-            _accel.X = 1;
-            _accel.Y = 1;
-            int _startPosX;
-            int _startPosY;
+            _accel.X = 3;
+            _accel.Y = 3;
             _direction = generateNewDirection();
             //Console.WriteLine(_direction);
             int reduction_for_current_rock = r.Next(1, 5);
@@ -110,14 +123,10 @@ namespace test
             _angle = 0f;
             rockR = 65 / size_reduction;
             _mass = 5 / size_reduction;
-            do
-            {
-                _startPosX = r.Next(0, graphicsDevice.Viewport.Width);
-                _startPosY = r.Next(0, graphicsDevice.Viewport.Height);
-            } while (checkCollisionForSpawn(character,rockR,_startPosX,_startPosY));
+            Vector2 randomSpawn = setNegativeSpawnPoint(graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);
 
-            _actualPos.X = _startPosX;
-            _actualPos.Y = _startPosY;
+            _actualPos.X = randomSpawn.X;
+            _actualPos.Y = randomSpawn.Y;
             //fix collision detection so that R is set by size reduction, DONE
             //Console.WriteLine(_actualPos);
             if (planetoidsSheet == null)
