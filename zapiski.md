@@ -29,3 +29,9 @@ So enostavni, delujejo na preprost način zaznavanja prostora, problem je ker je
 ##Končni avtomati
 Vsako stanje opisano kot enostaven agent, najpogostejši pristop
 Delujejo na podlagi diagrama stanj, v vsaki iteraciji preveri določene pogoje, na podlagi teh se odloči v kakšnem stanju bo.
+
+## PREDAVANJE 10 - 11.12.2017
+
+Nadaljujemo z agenti, agenti na podlagi naprej definiranih točk, ki jih mora obdelati in in bolj pametnem, ki sam pregleduje sceno.
+Agenta sta memory based agent in GBA agent
+

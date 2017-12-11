@@ -51,7 +51,7 @@ namespace test
             //Čas od kadar smo vstrelili
             timeSinceShot = 0;
             // Init sprites
-            npc_testing = new AI(this.GraphicsDevice);
+            npc_testing = new AI(this.GraphicsDevice, 3);
             character = new PlayerCharacter(this.GraphicsDevice);
             my_bullets = new List<Projectile>();
             my_rocks = new List<Planetoids>();
@@ -92,7 +92,7 @@ namespace test
 
             if (gameLogic.getNumRocks() <= 0)
             {
-                numberOfRocks = 1;
+                numberOfRocks = 10;
                 invulnTimer = 0.0f;
                 gameLogic.SetNumberOfRocks(numberOfRocks);
                 for (int i = 0; i < numberOfRocks; i++)
@@ -136,7 +136,7 @@ namespace test
             }
             //Posodabljanje parallax backgrounda
             //Posodabljanje kolizij in kamnov
-            npc_testing.UpdateAI(screenWidth,screenHeight,character);
+            npc_testing.UpdateAI(character,gameTime);
             ui_score_NUMS.UpdateValues(gameLogic.getScore().ToString());
             ui_rocks_REMAIN.UpdateValues(gameLogic.getNumRocks().ToString());
             invulnTimer+= (float)gameTime.ElapsedGameTime.TotalSeconds;

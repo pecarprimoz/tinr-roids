@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Background/bkgd_7.png</SourceFile>
-  <SourceTime>2017-11-12T10:30:35.5694408+01:00</SourceTime>
-  <DestFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/bin/Windows/Background/bkgd_7.xnb</DestFile>
-  <DestTime>2017-12-11T08:39:46.1865355+01:00</DestTime>
+  <SourceFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/AI/Mine/mines_together.png</SourceFile>
+  <SourceTime>2017-12-11T08:38:20.9155258+01:00</SourceTime>
+  <DestFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/bin/Windows/AI/Mine/mines_together.xnb</DestFile>
+  <DestTime>2017-12-11T08:39:46.5615538+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
