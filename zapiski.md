@@ -35,3 +35,12 @@ Delujejo na podlagi diagrama stanj, v vsaki iteraciji preveri določene pogoje, 
 Nadaljujemo z agenti, agenti na podlagi naprej definiranih točk, ki jih mora obdelati in in bolj pametnem, ki sam pregleduje sceno.
 Agenta sta memory based agent in GBA agent
 
+Sedaj delamo odkrivanje na sceni.
+*Deluje na podlagi grafov smernih točk
+*Imamo informirane in neinformirane metode
+*Različni pristopi k implementaciji preiskovanja, fifo, A*, BFS, DFS...
+*Pri informirani imamo hevristično funkcijo, so hitrejši, rabi manj spomina, ni optimalen
+*Lahko uporabimo tudi dijkstrin algoritem, najprej v širino, glede na cene poti najde optimalno reštiev, čas komp. prost. zaht...
+
+
+
