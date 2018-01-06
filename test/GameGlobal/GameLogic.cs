@@ -11,10 +11,12 @@ namespace test
         private long currentScore;
         private int numberOfRocks;
         private int playerLives;
+        private int current_wave;
         private PlayerCharacter player;
         private List<Planetoids> planets;
         public GameLogic(int rcks, int plLife, PlayerCharacter ply, List<Planetoids> plnts)
         {
+            current_wave = 1;
             currentScore = 0;
             numberOfRocks = rcks;
             playerLives = plLife;
@@ -45,6 +47,14 @@ namespace test
         public long getNumRocks()
         {
             return this.numberOfRocks;
+        }
+        public void incrementWave()
+        {
+            current_wave++;
+        }
+        public int getWave()
+        {
+            return current_wave;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -8,6 +10,7 @@ namespace test
     
     class Projectile
     {
+        SoundEffect projectileShoot;
         Texture2D projectileSheet;
         CollsionDetection _collision;
         Vector2 _position;
@@ -38,7 +41,7 @@ namespace test
         {
             isFlying = isfly;
         }
-        public Projectile(GraphicsDevice graphicsDevice)
+        public Projectile(GraphicsDevice graphicsDevice, ContentManager content)
         {
             canShoot = true;
             isFlying = false;
@@ -52,7 +55,10 @@ namespace test
                     _width = projectileSheet.Width;
                     _height = projectileSheet.Height;
                 }
+
             }
+            
+            projectileShoot = content.Load<SoundEffect>("Sounds/Laser_Shoot18");
             //Init collision detection
             _collision = new CollsionDetection(_position, graphicsDevice, _width, _height, _angle, 1);
         }
@@ -60,6 +66,7 @@ namespace test
         {
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
+                projectileShoot.Play();
                 canShoot = false;
                 isFlying = true;
                 _direction = new Vector2((float)Math.Sin(_angle), -(float)Math.Cos(_angle));

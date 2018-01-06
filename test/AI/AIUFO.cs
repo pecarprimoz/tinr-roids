@@ -4,14 +4,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Audio;
 
 namespace test
 {
-    class PlayerCharacter
+    class AIUFO
     {
         //Atlas vseh ladji
-        SoundEffect projectileShoot;
         Texture2D spaceShipsSheet;
         CollsionDetection _collision;
         bool _driving;
@@ -22,6 +20,10 @@ namespace test
         float _angle;
         float _width;
         float _height;
+        Vector2 currentDest;
+        int screenWidth;
+        int screenHeight;
+
         public CollsionDetection getCollision()
         {
             return _collision;
@@ -62,13 +64,20 @@ namespace test
         {
             _isAlive = b;
         }
-
-        public PlayerCharacter(GraphicsDevice graphicsDevice)
+        public Vector2 generateRandomPointOnMap()
+        {
+            Random r = new Random();
+            return new Vector2(r.Next(20, screenWidth - 20), r.Next(20, screenHeight - 20));
+        }
+        public AIUFO(GraphicsDevice graphicsDevice)
         {
             _isAlive = true;
             //Temporary spawn
-            _position.X = 400;
-            _position.Y = 300;
+            
+            screenWidth = graphicsDevice.Viewport.Width;
+            screenHeight = graphicsDevice.Viewport.Height;
+            currentDest = generateRandomPointOnMap();
+            _position = new Vector2(300, 300);
 
             if (spaceShipsSheet == null)
             {
@@ -84,30 +93,10 @@ namespace test
             //Init collision detection
             _collision = new CollsionDetection(_position, graphicsDevice, _width, _height, _angle, 1);
         }
-        public void checkIfGoingTroughScreenEdges(int screenWidth, int screenHeight)
-        {
-            //change hardcoded values
-            if (_position.X > screenWidth)
-            {
-                _position.X = 0;
-            }
-            else if (_position.X < 0)
-            {
-                _position.X = screenWidth;
-            }
-            else if (_position.Y > screenHeight)
-            {
-                _position.Y = 0;
-            }
-            else if (_position.Y < 0)
-            {
-                _position.Y = screenHeight;
-            }
-        }
         public void Draw(SpriteBatch spriteBatch)
         {
-            Console.WriteLine(_angle);
-            if (_isAlive) { 
+            if (_isAlive)
+            {
                 //Draw the player, /2 mas tm za rotacijsko tocko, k je nasred sprite-a
                 spriteBatch.Draw(spaceShipsSheet, new Rectangle((int)_position.X, (int)_position.Y, (int)spaceShipsSheet.Width, (int)spaceShipsSheet.Height), null, Color.White, _angle, new Vector2(spaceShipsSheet.Width / 2, spaceShipsSheet.Height / 2), SpriteEffects.None, 0f);
                 //Draw the box for collsion detection
@@ -116,57 +105,35 @@ namespace test
                 _collision.drawCollisionBox(spriteBatch);
             }
         }
-
-        public void checkControls(KeyboardState state, int screenWidth, int screenHeight, List<Planetoids> rocks)
+        public void UpdateAI(PlayerCharacter pc, GameTime gametime)
         {
-            if (_isAlive)
-            {
-                if (Keyboard.GetState().IsKeyDown(Keys.R))
-                {
-                    int id = 0;
-                    foreach(Planetoids p in rocks)
-                    {
-                        Console.WriteLine(id+" "+p.getPosition().X+" "+p.getPosition().Y);
-                        id++;
-                    }
-                    
-                }
-                checkIfGoingTroughScreenEdges(screenWidth, screenHeight);
-                if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                {                    
-                    _angle -= MathHelper.ToRadians(4.2f);
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                {
-                    _angle += MathHelper.ToRadians(4.2f);
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                {
-                    if (_driving == false)
-                    {
-                        _driving = true;
-                        _accel = 1;
-                    }
-                    _direction = new Vector2((float)Math.Sin(_angle), -(float)Math.Cos(_angle));
-                    _position += _direction * _accel;
-                    _accel += 0.2f;
-                    if (_accel > 5)
-                    {
-                        _accel = 5;
-                    }
-                }
-                else
-                {
-                    _driving = false;
-                    _accel -= 0.1f;
-                }
-                _position += _direction * _accel;
+            _direction = Vector2.Normalize(pc.getPosition() - _position);
+            _position += _direction * _accel;
+            _angle = (float)Math.Atan2(_direction.Y, -_direction.X);
+            Console.WriteLine(_angle);
+        }
+        public void RotateUFO()
+        {
+            
+        }
 
-                if (_accel < 0)
+        public void Type1AI()
+        {
+            if (Vector2.Distance(_position, currentDest) > 5)
+            {
+                _direction = Vector2.Normalize(currentDest - _position);
+                _position += _direction * _accel;
+                _accel += 0.2f;
+                if (_accel > 5)
                 {
-                    _accel = 0;
+                    _accel = 5;
                 }
             }
+            else
+            {
+                currentDest = generateRandomPointOnMap();
+            }
+
         }
     }
 }

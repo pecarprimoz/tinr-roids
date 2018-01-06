@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Sounds/Laser_Shoot18.wav</SourceFile>
+  <SourceTime>2017-12-20T19:00:33.2088985+01:00</SourceTime>
+  <DestFile>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/bin/Windows/Sounds/Laser_Shoot18.xnb</DestFile>
+  <DestTime>2017-12-20T19:16:16.3303472+01:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

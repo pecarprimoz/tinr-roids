@@ -27,16 +27,31 @@ namespace test
             posY = posy;
             word = s;
         }
-        public ScreenUI(GraphicsDevice graphicsDevice, int posx, int posy)
+        public ScreenUI(GraphicsDevice graphicsDevice, int posx, int posy,int hp)
         {
 
             if (shipHP == null)
             {
                 //Poglej tukaj ce je path pravilen, ce ne se atlas ne bo izriseval pravilno. 
                 //NOTE TO SELF, MORS PREMAKNT VSE V C:\Users\primoz-pc\source\repos\test\test\bin\Windows\x86\Debug\Content, KER SE OD TAM ZAGANJA DEBUGGER
+                if(hp>=3)
                 using (var stream = TitleContainer.OpenStream("Content/Ships/main-ship-v1.png"))
                 {
                     shipHP = Texture2D.FromStream(graphicsDevice, stream);
+                }
+                else if (hp == 2)
+                {
+                    using (var stream = TitleContainer.OpenStream("Content/Ships/main-ship-v1-damage1.png"))
+                    {
+                        shipHP = Texture2D.FromStream(graphicsDevice, stream);
+                    }
+                }
+                else if (hp <= 1)
+                {
+                    using (var stream = TitleContainer.OpenStream("Content/Ships/main-ship-v1-damage2.png"))
+                    {
+                        shipHP = Texture2D.FromStream(graphicsDevice, stream);
+                    }
                 }
             }
             posX = posx;

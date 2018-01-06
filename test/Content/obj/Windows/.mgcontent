@@ -19,5 +19,8 @@
     <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Projectiles/shotoval.png</File>
     <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Fonts/ScreenUI.spritefont</File>
     <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/AI/Mine/mines_together.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Ships/main-ship-v1-damage1.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Ships/main-ship-v1-damage2.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Sounds/Laser_Shoot18.wav</File>
   </SourceFiles>
 </SourceFileCollection>

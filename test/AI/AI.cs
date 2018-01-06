@@ -175,7 +175,6 @@ namespace test
                 _direction = Vector2.Normalize(pc.getPosition() - _position);
                 _position += _direction * _accel;
                 _angle = (float)Math.Atan2(_direction.Y, -_direction.X);
-                //Console.WriteLine(_angle);
                 _accel += 0.2f;
                 if (_accel > 5)
                 {
@@ -246,8 +245,6 @@ namespace test
             {
                 Type3AI(pc);
             }
-
-            
         }
     }
 }
