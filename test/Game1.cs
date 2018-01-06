@@ -16,21 +16,29 @@ namespace test
         GraphicsDeviceManager graphics;
         MenuLogic menuLogic;
         GameMain game;
+        MainMenu menu;
+        SettingsMenu settings;
+        int screenWidth = 800;
+        int screenHeight = 600;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             menuLogic = new MenuLogic(graphics,this.Content, this.GraphicsDevice);
             game = menuLogic.setupGame();
+            menu = menuLogic.setupMainMenu();
+            settings = menuLogic.setupSettingsMenu();
         }
         protected override void Initialize()
-        {   
+        {
+            this.IsMouseVisible = true;
             base.Initialize();
         }
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            game.LoadContent();
+            //game.LoadContent();
         }
 
         protected override void UnloadContent()
@@ -42,8 +50,41 @@ namespace test
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            game.Update(gameTime);
-           
+            if (menu.getIsButtonPlayPressed())
+            {
+                menuLogic.setActiveComponent(2);
+                menu.setIsButtonPlayPressed(false);
+            }
+            else if (game.getIsButtonPressed())
+            {
+                menuLogic.setActiveComponent(1);
+                game.setIsButtonPressed(false);
+            }
+            else if (menu.getIsButtonSettingsPressed())
+            {
+                menuLogic.setActiveComponent(3);
+                menu.setIsButtonSettingsPressed(false);
+            }
+            else if (settings.getIsButtonBackPressed())
+            {
+                menuLogic.setActiveComponent(1);
+                settings.setIsButtonBackPressed(false);
+            }
+
+            if (menuLogic.getActiveComponent() == 1)
+            {
+                menu.Update(gameTime);
+            }
+            else if (menuLogic.getActiveComponent() == 2) { 
+                game.Update(gameTime);
+            }
+            else if(menuLogic.getActiveComponent() == 3)
+            {
+                settings.Update(gameTime);
+            }
+
+            
+
             base.Update(gameTime);
         }
 
@@ -53,7 +94,18 @@ namespace test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            game.Draw(gameTime);
+            if(menuLogic.getActiveComponent() == 1)
+            {
+                menu.Draw(gameTime);
+            }
+            else if(menuLogic.getActiveComponent() == 2)
+            {
+                game.Draw(gameTime);
+            }
+            else if (menuLogic.getActiveComponent() == 3)
+            {
+                settings.Draw(gameTime);
+            }
             base.Draw(gameTime);
         }
 

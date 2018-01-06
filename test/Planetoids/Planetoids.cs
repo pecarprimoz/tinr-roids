@@ -146,6 +146,7 @@ namespace test
             {
                 spin.AddFrame(new Rectangle((i * (int)planetWidth), (int)nice_rock * 130, (int)planetWidth, (int)planetHeight), TimeSpan.FromSeconds(.15));
             }
+            currentAnimation = spin;
         }
 
         public void Draw(SpriteBatch spriteBatch)

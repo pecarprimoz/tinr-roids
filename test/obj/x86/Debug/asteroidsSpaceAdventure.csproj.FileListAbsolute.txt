@@ -79,3 +79,5 @@ C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Cont
 C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Content\Ships\main-ship-v1-damage1.xnb
 C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Content\Ships\main-ship-v1-damage2.xnb
 C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Content\Sounds\Laser_Shoot18.xnb
+C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Content\Buttons\button_play-game.xnb
+C:\Users\primoz-windowsi\source\repos\tinr-roids\test\bin\Windows\x86\Debug\Content\Buttons\button_b.xnb

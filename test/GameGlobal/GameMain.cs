@@ -12,6 +12,15 @@ namespace test.GameGlobal
 {
     class GameMain
     {
+        bool isBackPressed;
+        public bool getIsButtonPressed()
+        {
+            return isBackPressed;
+        }
+        public void setIsButtonPressed(bool b)
+        {
+            isBackPressed = b;
+        }
         AI npc_testing;
         AIUFO ufo_testing;
         SpriteBatch spriteBatch;
@@ -23,6 +32,7 @@ namespace test.GameGlobal
         ScreenUI ui_rocks_REMAIN;
         ScreenUI ui_rocks_NUMOFROCKS;
         ScreenUI ui_wave_NUMS;
+        ScreenUI ui_but_back;
         int screenWidth = 800;
         int screenHeight = 600;
         int playerHP;
@@ -68,6 +78,7 @@ namespace test.GameGlobal
             ui_score_SCORE = new ScreenUI(contentMain, 55, 20, "SCORE");
             ui_score_NUMS = new ScreenUI(contentMain, 55, 40, gameLogic.getScore().ToString());
             ui_playerHP = new ScreenUI(graphicsDeviceMain, screenWidth - 100, 40, 3);
+            ui_but_back = new ScreenUI(graphicsDeviceMain, screenWidth - 150, 40);
             ui_playerHP_NUMS = new ScreenUI(contentMain, screenWidth - 60, 40, "x " + playerHP.ToString());
             ui_wave_NUMS = new ScreenUI(contentMain, screenWidth / 2, 40, "WAVE: " + gameLogic.getWave());
             my_backs = new BackgroundLoader(graphicsDeviceMain);
@@ -87,6 +98,12 @@ namespace test.GameGlobal
         }
         public void Update(GameTime gameTime)
         {
+            ui_but_back.Update(gameTime);
+            if (ui_but_back.getIsButtonBackPressed())
+            {
+                ui_but_back.setIsButtonBackPressed(false);
+                isBackPressed = true;
+            }
             if (gameLogic.getNumRocks() <= 0)
             {
                 gameLogic.incrementWave();
@@ -179,6 +196,7 @@ namespace test.GameGlobal
             ui_playerHP.DrawImage(spriteBatch);
             ui_playerHP_NUMS.DrawFont(spriteBatch);
             ui_wave_NUMS.DrawFont(spriteBatch);
+            ui_but_back.DrawButton(spriteBatch);
             spriteBatch.End();
         }
         public void updateGameBullets(KeyboardState state)

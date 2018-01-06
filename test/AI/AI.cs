@@ -127,6 +127,7 @@ namespace test
             {
                 spin.AddFrame(new Rectangle((i * (int)_width), 0, (int)_width, (int)_height), TimeSpan.FromSeconds(.15));
             }
+            currentAnimation = spin;
 
         }
 
@@ -141,6 +142,7 @@ namespace test
                 _collision.setPosition(_position);
                 _collision.setAngle(_angle);
                 _collision.drawCollisionBox(spriteBatch);
+
             }
         }
         public Vector2 generateRandomPointOnMap()
@@ -231,7 +233,7 @@ namespace test
         {
             //Ok recimo da lah uporabm za AI k se hoče na vsak način zadet vate
             //faza obračanja in faza 
-            currentAnimation = spin;
+            
             currentAnimation.Update(gametime);
             if (type == 1)
             {

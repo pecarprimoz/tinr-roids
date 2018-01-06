@@ -22,5 +22,7 @@
     <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Ships/main-ship-v1-damage1.png</File>
     <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Ships/main-ship-v1-damage2.png</File>
     <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Sounds/Laser_Shoot18.wav</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Buttons/button_play-game.png</File>
+    <File>C:/Users/primoz-windowsi/source/repos/tinr-roids/test/Content/Buttons/button_b.png</File>
   </SourceFiles>
 </SourceFileCollection>

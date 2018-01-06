@@ -69,7 +69,9 @@
     <Compile Include="Background\BackgroundLoader.cs" />
     <Compile Include="GameGlobal\GameLogic.cs" />
     <Compile Include="GameGlobal\GameMain.cs" />
+    <Compile Include="GameGlobal\MainMenu.cs" />
     <Compile Include="GameGlobal\MenuLogic.cs" />
+    <Compile Include="GameGlobal\SettingsMenu.cs" />
     <Compile Include="Projectile\Projectile.cs" />
     <Compile Include="CollisionDetection\CollsionDetection.cs" />
     <Compile Include="Planetoids\Planetoids.cs" />
